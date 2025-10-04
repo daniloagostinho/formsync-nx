@@ -86,9 +86,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
         
-    - name: 🧹 Force Cleanup Existing Resources
+    - name: 🔄 Import All Existing Resources
       working-directory: apps/terraform
-      run: ./force-cleanup-vpcs.sh
+      run: ./import-all-existing.sh
       env:
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
