@@ -1,0 +1,45 @@
+/* Estilo clean para os cartões do perfil - padronizado com dashboard e templates */
+
+/* Loading spinner padrão do sistema */
+.loading-spinner {
+    border: 2px solid #e5e7eb;
+    border-top: 2px solid #6366f1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animações suaves padrão */
+.smooth-transition {
+    transition: all 0.2s ease;
+}
+
+/* Estados especiais padrão */
+.card.active {
+    border-color: #7c3aed;
+    background: #faf5ff;
+}
+
+.card.success {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.card.warning {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.card.error {
+    border-color: #ef4444;
+    background: #fef2f2;
+}

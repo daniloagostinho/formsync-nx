@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # Redpanda (Kafka compatível) para desenvolvimento local
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: redpanda
+    command:
+      - redpanda start --overprovisioned --smp 1 --memory 512M --reserve-memory 0M --node-id 0 --check=false --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092 --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+    ports:
+      - "9092:9092"   # Kafka API (internal network)
+      - "19092:19092" # Kafka API (external for host)
+      - "9644:9644"   # Admin API
+    environment:
+      - REDPANDA_ENABLE_SCHEMA_REGISTRY=false
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "rpk cluster info -X brokers=redpanda:9092 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Aplicação Spring Boot conectando ao RDS
+  api:
+    build: .
+    container_name: backend-api-rds
+    ports:
+      - "8080:8080"
+    environment:
+      # Configurações do RDS PostgreSQL
+      SPRING_PROFILES_ACTIVE: rds
+      SPRING_DATASOURCE_URL: jdbc:postgresql://formsync-postgres-prod.ce3600s8g9qz.us-east-1.rds.amazonaws.com:5432/formsync
+      SPRING_DATASOURCE_USERNAME: formsync_admin
+      SPRING_DATASOURCE_PASSWORD: FormSync2024!Secure
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      
+      # Configurações JPA
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "false"
+      
+      # Configurações da aplicação
+      SPRING_APPLICATION_NAME: formsync-backend
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB_CORS: DEBUG
+      
+      # Kafka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      SPRING_KAFKA_CONSUMER_GROUP_ID: backend-group
+      
+      # Stripe (você pode alterar para suas chaves de produção)
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      
+      # Email (você pode alterar para suas credenciais)
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      
+      # Configurações de memória JVM
+      JAVA_OPTS: -Xmx512m -Xms256m
+    depends_on:
+      redpanda:
+        condition: service_started
+    networks:
+      - backend-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Kafka UI (Provectus) - UI para ver tópicos e mensagens
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=redpanda:9092
+    ports:
+      - "8081:8080"
+    depends_on:
+      - redpanda
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+
+

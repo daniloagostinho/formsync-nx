@@ -1,0 +1,310 @@
+// FormSync - Template Builder Extension
+class FormSyncPopup {
+  constructor() {
+    this.templates = [];
+    this.selectedTemplate = null;
+    this.currentUrl = '';
+    this.init();
+  }
+
+  async init() {
+    await this.loadTemplates();
+    await this.getCurrentTab();
+    this.setupEventListeners();
+    this.updateUI();
+  }
+
+  async loadTemplates() {
+    try {
+      // Carrega templates reais da API pública do backend
+      // Usa IP local para funcionar em qualquer contexto
+      const baseUrl = 'http://127.0.0.1:8080';
+      
+      const response = await fetch(`${baseUrl}/api/v1/public/templates`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Extension-Key': 'ext_2024_preenche_rapido_secure_key_987654321'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        this.templates = data || [];
+        console.log('FormSync: Templates carregados:', this.templates);
+        this.showStatus(`${this.templates.length} templates carregados`, 'success');
+      } else {
+        console.error('FormSync: Erro ao carregar templates:', response.status);
+        this.templates = [];
+        this.showStatus(`Erro ${response.status}: ${response.statusText}`, 'error');
+      }
+    } catch (error) {
+      console.error('FormSync: Erro ao carregar templates:', error);
+      this.templates = [];
+      
+      if (error.message.includes('Failed to fetch')) {
+        this.showStatus('Servidor backend não está rodando. Verifique se está em localhost:8080', 'error');
+      } else {
+        this.showStatus(`Erro de conexão: ${error.message}`, 'error');
+      }
+    }
+  }
+
+  async getCurrentTab() {
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      this.currentUrl = tab.url;
+    } catch (error) {
+      console.error('Erro ao obter URL atual:', error);
+    }
+  }
+
+  setupEventListeners() {
+    // Template selector
+    document.getElementById('templateSelect').addEventListener('change', (e) => {
+      this.onTemplateSelect(e.target.value);
+    });
+
+    // Fill form button
+    document.getElementById('fillFormBtn').addEventListener('click', () => {
+      this.fillForm();
+    });
+
+    // Detect fields button
+    document.getElementById('detectFieldsBtn').addEventListener('click', () => {
+      this.detectFields();
+    });
+
+    // Create template button
+    document.getElementById('createTemplateBtn').addEventListener('click', () => {
+      this.openTemplateManager();
+    });
+
+    // Manage templates button
+    document.getElementById('manageTemplatesBtn').addEventListener('click', () => {
+      this.openTemplateManager();
+    });
+
+    // Adiciona listener para recarregar templates quando o popup abrir
+    window.addEventListener('focus', () => {
+      this.loadTemplates();
+    });
+
+    // Refresh templates button
+    document.getElementById('refreshTemplatesBtn').addEventListener('click', () => {
+      this.loadTemplates();
+      this.showStatus('Atualizando templates...', 'info');
+    });
+
+    // Test connection button
+    document.getElementById('testConnectionBtn').addEventListener('click', () => {
+      this.testConnection();
+    });
+  }
+
+  updateUI() {
+    this.updateTemplateSelector();
+    this.updateTemplateInfo();
+    this.updateButtons();
+  }
+
+  updateTemplateSelector() {
+    const select = document.getElementById('templateSelect');
+    
+    if (this.templates.length === 0) {
+      select.innerHTML = '<option value="">Nenhum formulário encontrado</option>';
+      select.disabled = true;
+    } else {
+      select.innerHTML = '<option value="">Selecione um template...</option>';
+      select.disabled = false;
+      
+      this.templates.forEach(template => {
+        const option = document.createElement('option');
+        option.value = template.id;
+        option.textContent = template.nome;
+        select.appendChild(option);
+      });
+    }
+  }
+
+  updateTemplateInfo() {
+    const infoDiv = document.getElementById('templateInfo');
+    const camposList = document.getElementById('camposList');
+    
+    if (this.selectedTemplate) {
+      infoDiv.classList.remove('hidden');
+      camposList.innerHTML = '';
+      
+      this.selectedTemplate.campos.forEach(campo => {
+        const li = document.createElement('li');
+        li.className = 'campo-item';
+        li.innerHTML = `
+          <span class="campo-nome">${campo.nome}</span>
+          <span class="campo-valor">${campo.valor}</span>
+        `;
+        camposList.appendChild(li);
+      });
+    } else {
+      infoDiv.classList.add('hidden');
+    }
+  }
+
+  updateButtons() {
+    const fillBtn = document.getElementById('fillFormBtn');
+    fillBtn.disabled = !this.selectedTemplate;
+  }
+
+  onTemplateSelect(templateId) {
+    if (templateId) {
+      this.selectedTemplate = this.templates.find(t => t.id == templateId);
+    } else {
+      this.selectedTemplate = null;
+    }
+    
+    this.updateTemplateInfo();
+    this.updateButtons();
+  }
+
+  async fillForm() {
+    if (!this.selectedTemplate) {
+      this.showStatus('Nenhum template selecionado', 'error');
+      return;
+    }
+
+    try {
+      this.showStatus('Preenchendo formulário...', 'info');
+      
+      // Envia mensagem para o content script
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: 'fillForm',
+        template: this.selectedTemplate
+      });
+
+      if (response && response.success) {
+        this.showStatus(`Formulário preenchido com sucesso! ${response.filledFields} campos preenchidos.`, 'success');
+        
+        // Registra o uso do template
+        this.recordTemplateUsage();
+      } else {
+        this.showStatus('Erro ao preencher formulário. Verifique se há campos compatíveis na página.', 'error');
+      }
+    } catch (error) {
+      console.error('Erro ao preencher formulário:', error);
+      this.showStatus('Erro ao comunicar com a página. Recarregue a página e tente novamente.', 'error');
+    }
+  }
+
+  async detectFields() {
+    try {
+      this.showStatus('Detectando campos na página...', 'info');
+      
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: 'detectFields'
+      });
+
+      if (response && response.success) {
+        this.showStatus(`Detectados ${response.detectedFields} campos na página.`, 'success');
+      } else {
+        this.showStatus('Nenhum campo detectado ou erro na detecção.', 'error');
+      }
+    } catch (error) {
+      console.error('Erro ao detectar campos:', error);
+      this.showStatus('Erro ao comunicar com a página. Recarregue a página e tente novamente.', 'error');
+    }
+  }
+
+  async recordTemplateUsage() {
+    try {
+      // Registra o uso do template no backend
+      const baseUrl = 'http://127.0.0.1:8080';
+      
+      const response = await fetch(`${baseUrl}/api/v1/public/templates/${this.selectedTemplate.id}/uso`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Extension-Key': 'ext_2024_preenche_rapido_secure_key_987654321'
+        },
+        body: JSON.stringify({ success: true })
+      });
+
+      if (response.ok) {
+        console.log('FormSync: Uso do template registrado com sucesso');
+        
+        // Atualiza estatísticas locais
+        if (!this.selectedTemplate.totalUso) {
+          this.selectedTemplate.totalUso = 0;
+        }
+        this.selectedTemplate.totalUso++;
+        this.selectedTemplate.ultimoUso = new Date().toISOString();
+      } else {
+        console.error('FormSync: Erro ao registrar uso do template:', response.status);
+      }
+      
+    } catch (error) {
+      console.error('FormSync: Erro ao registrar uso do template:', error);
+    }
+  }
+
+  /**
+   * Testa a conexão com o servidor backend
+   */
+  async testConnection() {
+    try {
+      this.showStatus('Testando conexão...', 'info');
+      
+      const baseUrl = 'http://127.0.0.1:8080';
+      
+      const response = await fetch(`${baseUrl}/api/v1/public/health`, {
+        method: 'GET',
+        headers: {
+          'X-Extension-Key': 'ext_2024_preenche_rapido_secure_key_987654321'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        this.showStatus(`✅ Conectado! ${data.message}`, 'success');
+        console.log('FormSync: Conexão testada com sucesso:', data);
+      } else {
+        this.showStatus(`❌ Erro ${response.status}: ${response.statusText}`, 'error');
+        console.error('FormSync: Erro ao testar conexão:', response.status);
+      }
+    } catch (error) {
+      console.error('FormSync: Erro ao testar conexão:', error);
+      
+      if (error.message.includes('Failed to fetch')) {
+        this.showStatus('❌ Servidor não está rodando em localhost:8080', 'error');
+      } else {
+        this.showStatus(`❌ Erro: ${error.message}`, 'error');
+      }
+    }
+  }
+
+  openTemplateManager() {
+    // Abre o gerenciador de templates em uma nova aba
+    chrome.tabs.create({
+      url: 'http://localhost:4200/templates' // URL do frontend Angular
+    });
+  }
+
+  showStatus(message, type = 'info') {
+    const statusDiv = document.getElementById('status');
+    statusDiv.textContent = message;
+    statusDiv.className = `status ${type}`;
+    statusDiv.classList.remove('hidden');
+    
+    // Auto-hide após 5 segundos
+    setTimeout(() => {
+      statusDiv.classList.add('hidden');
+    }, 5000);
+  }
+}
+
+// Inicializa o popup quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', () => {
+  new FormSyncPopup();
+});

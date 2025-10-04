@@ -1,0 +1,431 @@
+/* Estilo clean para os cartões de cookies - seguindo a identidade visual do dashboard */
+
+/* Container principal */
+.cookies-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cartão principal - usando a mesma classe do dashboard */
+.dashboard-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  /* Borda cinza leve igual ao dashboard */
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dashboard-card:hover {
+  border-color: #d1d5db;
+  /* Borda um pouco mais escura no hover */
+  transform: translateY(-2px);
+}
+
+/* Cabeçalho */
+.text-center {
+  text-align: center;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
+}
+
+.border-top {
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Ícone principal */
+.legal-icon {
+  font-size: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #3b82f6;
+  margin-bottom: 1rem;
+}
+
+/* Título principal */
+.legal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Subtítulo */
+.legal-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+}
+
+/* Conteúdo principal */
+.legal-content {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* Cabeçalhos das seções */
+.section-heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Texto das seções */
+.section-text {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Lista das seções */
+.section-list {
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* Ícones das seções */
+.section-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+/* Ícones de check */
+.check-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #10b981;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+/* Cards especiais */
+.info-card {
+  background-color: #eff6ff;
+  border: 1px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+/* Títulos dos cards */
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: inherit;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Ícones dos cards */
+.info-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+/* Expansion Panels customizados */
+.expansion-panel {
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.expansion-panel:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.panel-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f8fafc;
+  border-radius: 12px 12px 0 0;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.panel-content {
+  padding: 1rem 1.5rem;
+}
+
+.panel-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+/* Browser Links */
+.browser-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.browser-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.browser-link:hover {
+  background-color: #eff6ff;
+  color: #3b82f6;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.browser-link mat-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Third Party Cookies */
+.third-party-cookies {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cookie-item {
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.cookie-item:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.cookie-item-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.cookie-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #3b82f6;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.cookie-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+}
+
+.cookie-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Card de contato */
+.contact-card {
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* Título do contato */
+.contact-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Texto do contato */
+.contact-text {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+/* Ícone do contato */
+.contact-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+/* Botão de contato */
+.contact-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.contact-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Cores de texto */
+.text-primary {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.text-primary:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cookies-container {
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+
+  .legal-title {
+    font-size: 1.5rem;
+  }
+
+  .legal-content {
+    font-size: 0.9rem;
+  }
+
+  .legal-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .section-heading {
+    font-size: 1rem;
+  }
+
+  .section-text {
+    font-size: 0.9rem;
+  }
+
+  .browser-links {
+    flex-direction: column;
+  }
+
+  .browser-link {
+    justify-content: center;
+  }
+
+  .cookie-item {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookies-container {
+    padding: 12px;
+  }
+
+  .dashboard-card {
+    padding: 20px 16px;
+  }
+
+  .legal-title {
+    font-size: 1.25rem;
+  }
+
+  .section-heading {
+    font-size: 0.95rem;
+  }
+
+  .panel-header,
+  .panel-content {
+    padding: 0.75rem 1rem;
+  }
+
+  .cookie-item {
+    padding: 0.75rem;
+  }
+}

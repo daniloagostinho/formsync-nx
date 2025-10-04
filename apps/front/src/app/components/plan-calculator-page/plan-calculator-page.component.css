@@ -1,0 +1,60 @@
+/* Estilos específicos para a página da calculadora de planos */
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .h-screen {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .overflow-hidden {
+    overflow: visible;
+  }
+  
+  .p-6 {
+    padding: 1rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+  
+  .grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Animações suaves */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover effects para os cards de benefícios */
+.bg-white.rounded-xl.p-6.border.border-gray-200.shadow-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradientes personalizados */
+.bg-gradient-to-r.from-blue-50.to-indigo-50 {
+  background: linear-gradient(to right, #eff6ff, #eef2ff);
+}
+
+.bg-gradient-to-r.from-indigo-600.to-purple-600 {
+  background: linear-gradient(to right, #4f46e5, #9333ea);
+}
+
+/* Estilos para o botão CTA */
+.bg-white.text-indigo-600.px-6.py-3.rounded-xl.font-semibold:hover {
+  background-color: #f8fafc;
+  transform: scale(1.05);
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .transition-all,
+  .hover\:scale-105:hover {
+    transition: none;
+    transform: none;
+  }
+}

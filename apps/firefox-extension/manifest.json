@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+  "name": "FormSync - Template Builder",
+  "version": "2.0.0",
+  "description": "Crie templates personalizados e preencha formulários automaticamente em qualquer site com 100% de precisão",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "https://backend-production-0914.up.railway.app/*",
+    "https://formsync.netlify.app/*",
+    "<all_urls>"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "FormSync - Templates"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "web_accessible_resources": [
+    "content.js"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

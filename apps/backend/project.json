@@ -1,0 +1,76 @@
+{
+  "name": "backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/backend/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["apps/backend/target"],
+      "options": {
+        "command": "mvn clean package -DskipTests",
+        "cwd": "apps/backend"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mvn test",
+        "cwd": "apps/backend"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mvn checkstyle:check",
+        "cwd": "apps/backend"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mvn spring-boot:run -Dspring-boot.run.profiles=dev",
+        "cwd": "apps/backend"
+      }
+    },
+    "serve:local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mvn spring-boot:run -Dspring-boot.run.profiles=local",
+        "cwd": "apps/backend"
+      }
+    },
+    "serve:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mvn spring-boot:run -Dspring-boot.run.profiles=prod",
+        "cwd": "apps/backend"
+      }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -f Dockerfile.prod -t formsync-backend:latest .",
+        "cwd": "apps/backend"
+      }
+    },
+    "docker-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker tag formsync-backend:latest $ECR_REPO:latest && docker push $ECR_REPO:latest",
+        "cwd": "apps/backend"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run backend:docker-build",
+          "nx run backend:docker-push"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["backend", "spring-boot", "java"]
+}

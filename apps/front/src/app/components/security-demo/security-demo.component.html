@@ -1,0 +1,244 @@
+<div class="security-demo-container">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="security-icon">security</mat-icon>
+        Demonstração de Segurança - FormSync
+      </mat-card-title>
+      <mat-card-subtitle>
+        Teste todas as funcionalidades de proteção de dados implementadas
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Status do Ambiente -->
+      <mat-card class="status-card">
+        <mat-card-header>
+          <mat-card-title>🔧 Status do Ambiente</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="status-grid">
+            <div class="status-item">
+              <strong>Produção:</strong>
+              <span [class]="getEnvironmentInfo().production ? 'status-success' : 'status-info'">
+                {{ getEnvironmentInfo().production ? 'Sim' : 'Não' }}
+              </span>
+            </div>
+            <div class="status-item">
+              <strong>HTTPS Obrigatório:</strong>
+              <span [class]="getEnvironmentInfo().httpsRequired ? 'status-success' : 'status-warning'">
+                {{ getEnvironmentInfo().httpsRequired ? 'Sim' : 'Não' }}
+              </span>
+            </div>
+            <div class="status-item">
+              <strong>SSL Habilitado:</strong>
+              <span [class]="getEnvironmentInfo().sslEnabled ? 'status-success' : 'status-warning'">
+                {{ getEnvironmentInfo().sslEnabled ? 'Sim' : 'Não' }}
+              </span>
+            </div>
+            <div class="status-item">
+              <strong>Ambiente Seguro:</strong>
+              <span [class]="isSecureEnvironment ? 'status-success' : 'status-error'">
+                {{ isSecureEnvironment ? 'Sim' : 'Não' }}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Funcionalidades de Segurança -->
+      <mat-card class="features-card">
+        <mat-card-header>
+          <mat-card-title>🛡️ Funcionalidades Implementadas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let feature of securityFeatures">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ feature.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ feature.status }}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p>{{ feature.description }}</p>
+              <mat-list>
+                <mat-list-item *ngFor="let detail of feature.details">
+                  <mat-icon matListItemIcon>check_circle</mat-icon>
+                  <div matListItemTitle>{{ detail }}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Testes de Segurança -->
+      <mat-card class="test-card">
+        <mat-card-header>
+          <mat-card-title>🧪 Testes de Segurança</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <!-- Validação de Senha -->
+          <div class="test-section">
+            <h3>🔐 Validação de Senha</h3>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Digite uma senha para testar</mat-label>
+              <input matInput [(ngModel)]="password" type="password" placeholder="Ex: MinhaSenha123!">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+
+            <div class="button-group">
+              <button mat-raised-button color="primary" (click)="validatePassword()" [disabled]="!password">
+                <mat-icon>check_circle</mat-icon>
+                Validar Senha
+              </button>
+
+              <button mat-raised-button color="accent" (click)="hashPassword()" [disabled]="!password">
+                <mat-icon>security</mat-icon>
+                Gerar Hash
+              </button>
+            </div>
+
+            <!-- Resultado da Validação -->
+            <div *ngIf="passwordValidation.errors.length > 0" class="validation-errors">
+              <h4>❌ Erros encontrados:</h4>
+              <mat-chip-set>
+                <mat-chip *ngFor="let error of passwordValidation.errors" color="warn" variant="outlined">
+                  {{ error }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <div *ngIf="passwordValidation.isValid" class="validation-success">
+              <h4>✅ Senha válida!</h4>
+              <p>A senha atende a todos os requisitos de segurança.</p>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Criptografia de Dados -->
+          <div class="test-section">
+            <h3>🔒 Criptografia de Dados</h3>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Dados para criptografar</mat-label>
+              <textarea matInput [(ngModel)]="dataToEncrypt" placeholder="Digite dados sensíveis para criptografar"
+                rows="3"></textarea>
+            </mat-form-field>
+
+            <div class="button-group">
+              <button mat-raised-button color="primary" (click)="encryptData()" [disabled]="!dataToEncrypt">
+                <mat-icon>lock</mat-icon>
+                Criptografar
+              </button>
+
+              <button mat-raised-button color="accent" (click)="sanitizeInput()" [disabled]="!dataToEncrypt">
+                <mat-icon>cleaning_services</mat-icon>
+                Sanitizar
+              </button>
+            </div>
+
+            <!-- Dados Criptografados -->
+            <div *ngIf="encryptedData" class="encrypted-data">
+              <h4>🔐 Dados Criptografados:</h4>
+              <mat-form-field appearance="outline" class="full-width">
+                <textarea matInput [value]="encryptedData" readonly rows="3" class="encrypted-text"></textarea>
+                <mat-icon matSuffix>content_copy</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Descriptografia -->
+          <div class="test-section">
+            <h3>🔓 Descriptografia de Dados</h3>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Dados para descriptografar</mat-label>
+              <textarea matInput [(ngModel)]="dataToDecrypt" placeholder="Cole os dados criptografados aqui"
+                rows="3"></textarea>
+            </mat-form-field>
+
+            <div class="button-group">
+              <button mat-raised-button color="primary" (click)="decryptData()" [disabled]="!dataToDecrypt">
+                <mat-icon>lock_open</mat-icon>
+                Descriptografar
+              </button>
+            </div>
+
+            <!-- Dados Descriptografados -->
+            <div *ngIf="decryptedData" class="decrypted-data">
+              <h4>🔓 Dados Descriptografados:</h4>
+              <mat-form-field appearance="outline" class="full-width">
+                <textarea matInput [value]="decryptedData" readonly rows="3" class="decrypted-text"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Testes Adicionais -->
+          <div class="test-section">
+            <h3>🔍 Testes Adicionais</h3>
+
+            <div class="button-group">
+              <button mat-raised-button color="warn" (click)="testHTTPSRedirect()">
+                <mat-icon>https</mat-icon>
+                Testar HTTPS
+              </button>
+
+              <button mat-raised-button color="accent" (click)="generateCSRFToken()">
+                <mat-icon>refresh</mat-icon>
+                Gerar Novo CSRF
+              </button>
+            </div>
+
+            <!-- Token CSRF -->
+            <div class="csrf-token">
+              <h4>🛡️ Token CSRF Atual:</h4>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput [value]="csrfToken" readonly class="token-text">
+                <mat-icon matSuffix>content_copy</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Informações Técnicas -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>📚 Informações Técnicas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Algoritmos utilizados:</strong></p>
+          <ul>
+            <li><strong>Hash de senha:</strong> SHA-256 com salt único de 16 bytes</li>
+            <li><strong>Criptografia:</strong> AES-GCM com IV único de 12 bytes</li>
+            <li><strong>Tokens CSRF:</strong> 32 bytes aleatórios usando Web Crypto API</li>
+            <li><strong>Sanitização:</strong> Escape de caracteres especiais para prevenir XSS</li>
+          </ul>
+
+          <p><strong>Headers de segurança implementados:</strong></p>
+          <ul>
+            <li><code>X-Content-Type-Options: nosniff</code> - Previne MIME type sniffing</li>
+            <li><code>X-Frame-Options: DENY</code> - Previne clickjacking</li>
+            <li><code>X-XSS-Protection: 1; mode=block</code> - Proteção XSS do navegador</li>
+            <li><code>Strict-Transport-Security</code> - Força HTTPS (em produção)</li>
+            <li><code>Content-Security-Policy</code> - Política de segurança de conteúdo</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

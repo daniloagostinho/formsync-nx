@@ -1,0 +1,51 @@
+/* Animações para notificações */
+.notification-hiding {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Foco personalizado para campos do formulário */
+.mat-form-field.mat-focused .mat-form-field-outline {
+  border-color: #dc2626 !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #dc2626 !important;
+}
+
+/* Hover effects para cards */
+.hover\:border-gray-300:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Transições suaves */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex.gap-4 {
+    flex-direction: column;
+  }
+  
+  .flex-1 {
+    width: 100%;
+  }
+}

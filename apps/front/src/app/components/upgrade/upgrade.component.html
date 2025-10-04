@@ -1,0 +1,324 @@
+<!-- Layout Upgrade Moderno -->
+<div class="min-h-screen bg-gray-50">
+
+  <!-- Layout Principal -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 p-4">
+
+      <!-- Loading State Moderno -->
+      <ng-container *ngIf="carregandoPagina; else upgradeContent">
+        <div class="flex flex-col items-center justify-center py-16">
+          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+          <h3 class="mt-4 text-lg font-semibold text-gray-900">
+            Carregando Planos
+          </h3>
+          <p class="text-gray-500 mt-2 text-sm">
+            Aguarde enquanto preparamos suas opções de upgrade...
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-template #upgradeContent>
+        <!-- Boas-vindas e Header -->
+        <div class="mb-6">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h1 class="text-lg font-bold text-gray-900 mb-1">
+                Escolha o plano ideal para você
+              </h1>
+              <p class="text-gray-600 text-sm">
+                Ferramenta universal para qualquer profissional: escolha quantos formulários e campos você pode criar
+              </p>
+            </div>
+            <div class="flex-shrink-0">
+              <div
+                class="inline-flex items-center px-2 py-1.5 bg-blue-100 text-blue-800 rounded-lg text-xs font-medium">
+                <span class="material-icons text-blue-600 mr-1.5 text-sm">person</span>
+                Plano Atual: {{ getNomePlano(planoAtual) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensagens de Status -->
+        <div *ngIf="mensagem" class="mb-6">
+          <div class="p-3 rounded-lg border" [ngClass]="
+              mensagem.includes('✅') ? 'border-green-200 bg-green-50' :
+              mensagem.includes('❌') ? 'border-red-200 bg-red-50' : 'border-blue-200 bg-blue-50'">
+            <div class="flex items-center space-x-2">
+              <span class="material-icons text-sm" [ngClass]="
+                  mensagem.includes('✅') ? 'text-green-600' :
+                  mensagem.includes('❌') ? 'text-red-600' : 'text-blue-600'">
+                {{ mensagem.includes('✅') ? 'check_circle' :
+                mensagem.includes('❌') ? 'error' : 'info' }}
+              </span>
+              <span class="font-medium text-sm" [ngClass]="
+                  mensagem.includes('✅') ? 'text-green-800' :
+                  mensagem.includes('❌') ? 'text-red-800' : 'text-blue-800'">
+                {{ mensagem }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Layout principal: Planos em grid responsivo -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+          <!-- Seção dos Planos -->
+          <div class="lg:col-span-3">
+            <!-- Container dos Planos lado a lado -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+              <!-- PESSOAL - Destacado -->
+              <div
+                class="bg-white rounded-xl border-2 border-indigo-600 p-4 hover:border-indigo-700 transition-colors duration-200 relative flex flex-col h-full">
+                <div class="absolute -top-2.5 left-1/2 transform -translate-x-1/2">
+                  <div class="bg-indigo-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+                    Mais popular
+                  </div>
+                </div>
+
+                <div class="text-center mb-4 pt-3">
+                  <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">{{ planos['PESSOAL'].nome }}</h3>
+                  <div class="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
+                    {{ planos['PESSOAL'].precoFormatado }}
+                  </div>
+                  <p class="text-gray-600 text-xs sm:text-sm">{{ planos['PESSOAL'].limiteTemplates }} templates •
+                    {{ planos['PESSOAL'].limiteTotalCampos }} campos</p>
+                </div>
+
+                <ul class="space-y-3 mb-4 flex-grow">
+                  <li *ngFor="let recurso of planos['PESSOAL'].recursosSimples"
+                    class="flex items-center gap-2 text-gray-700 text-xs sm:text-sm">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    <span>{{ recurso }}</span>
+                  </li>
+                </ul>
+
+                <button *ngIf="!isPlanoAtual('PESSOAL') && podeFazerUpgrade('PESSOAL')"
+                  (click)="fazerUpgrade('PESSOAL')" [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-3 rounded-lg hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">star</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Assinar {{ planos['PESSOAL'].nome }}</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+
+                <button *ngIf="isPlanoAtual('PESSOAL')"
+                  class="w-full bg-gray-400 text-white font-semibold py-2 px-3 rounded-lg min-h-[40px] cursor-not-allowed flex items-center justify-center shadow-md text-sm"
+                  disabled>
+                  <span class="material-icons mr-1.5 text-sm">check_circle</span>
+                  <span>Seu plano atual</span>
+                </button>
+
+                <!-- Botão de Downgrade para PESSOAL -->
+                <button *ngIf="podeFazerDowngrade('PESSOAL')" (click)="fazerUpgrade('PESSOAL')"
+                  [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 px-3 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">arrow_downward</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Downgrade</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+              </div>
+
+              <!-- PROFISSIONAL -->
+              <div class="bg-white rounded-xl border border-gray-200 p-4 flex flex-col h-full">
+                <div class="text-center mb-4">
+                  <div class="inline-block bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-medium mb-3">
+                    {{ planos['PROFISSIONAL'].nome }}
+                  </div>
+                  <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">{{ planos['PROFISSIONAL'].nome }}
+                  </h3>
+                  <div class="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
+                    {{ planos['PROFISSIONAL'].precoFormatado }}
+                  </div>
+                  <p class="text-gray-600 text-xs sm:text-sm">{{ planos['PROFISSIONAL'].limiteTemplates }}
+                    Formulários • {{ planos['PROFISSIONAL'].limiteTotalCampos }} campos</p>
+                </div>
+
+                <ul class="space-y-3 mb-4 flex-grow">
+                  <li *ngFor="let recurso of planos['PROFISSIONAL'].recursosSimples"
+                    class="flex items-center gap-2 text-gray-700 text-xs sm:text-sm">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    <span>{{ recurso }}</span>
+                  </li>
+                </ul>
+
+                <button *ngIf="!isPlanoAtual('PROFISSIONAL') && podeFazerUpgrade('PROFISSIONAL')"
+                  (click)="fazerUpgrade('PROFISSIONAL')" [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold py-2 px-3 rounded-lg hover:from-gray-900 hover:to-black transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">star</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Assinar {{ planos['PROFISSIONAL'].nome }}</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+
+                <button *ngIf="isPlanoAtual('PROFISSIONAL')"
+                  class="w-full bg-gray-400 text-white font-semibold py-2 px-3 rounded-lg min-h-[40px] cursor-not-allowed flex items-center justify-center shadow-md text-sm"
+                  disabled>
+                  <span class="material-icons mr-1.5 text-sm">check_circle</span>
+                  <span>Seu plano atual</span>
+                </button>
+
+                <!-- Botão de Downgrade para PROFISSIONAL -->
+                <button *ngIf="podeFazerDowngrade('PROFISSIONAL')" (click)="fazerUpgrade('PROFISSIONAL')"
+                  [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 px-3 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">arrow_downward</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Downgrade</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+              </div>
+
+              <!-- EMPRESARIAL -->
+              <div class="bg-white rounded-xl border border-gray-200 p-4 flex flex-col h-full">
+                <div class="text-center mb-4">
+                  <div class="inline-block bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-medium mb-3">
+                    {{ planos['EMPRESARIAL'].nome }}
+                  </div>
+                  <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">{{ planos['EMPRESARIAL'].nome }}</h3>
+                  <div class="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
+                    {{ planos['EMPRESARIAL'].precoFormatado }}
+                  </div>
+                  <p class="text-gray-600 text-xs sm:text-sm">{{ planos['EMPRESARIAL'].limiteTemplates }}
+                    Formulários • {{ planos['EMPRESARIAL'].limiteTotalCampos }} campos</p>
+                </div>
+
+                <ul class="space-y-3 mb-4 flex-grow">
+                  <li *ngFor="let recurso of planos['EMPRESARIAL'].recursosSimples"
+                    class="flex items-center gap-2 text-gray-700 text-xs sm:text-sm">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    <span>{{ recurso }}</span>
+                  </li>
+                </ul>
+
+                <button *ngIf="!isPlanoAtual('EMPRESARIAL') && podeFazerUpgrade('EMPRESARIAL')"
+                  (click)="fazerUpgrade('EMPRESARIAL')" [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold py-2 px-3 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">business</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Assinar {{ planos['EMPRESARIAL'].nome }}</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+
+                <button *ngIf="isPlanoAtual('EMPRESARIAL')"
+                  class="w-full bg-gray-400 text-white font-semibold py-2 px-3 rounded-lg min-h-[40px] cursor-not-allowed flex items-center justify-center shadow-md text-sm"
+                  disabled>
+                  <span class="material-icons mr-1.5 text-sm">check_circle</span>
+                  <span>Seu plano atual</span>
+                </button>
+
+                <!-- Botão de Downgrade para EMPRESARIAL (nunca vai aparecer pois é o mais alto) -->
+                <button *ngIf="podeFazerDowngrade('EMPRESARIAL')" (click)="fazerUpgrade('EMPRESARIAL')"
+                  [disabled]="carregando || carregandoUpgrade"
+                  class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 px-3 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 min-h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md text-sm">
+                  <span *ngIf="!carregando" class="material-icons mr-1.5 text-sm">arrow_downward</span>
+                  <span *ngIf="carregando"
+                    class="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1.5"></span>
+                  <span *ngIf="!carregando">Downgrade</span>
+                  <span *ngIf="carregando">Processando...</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CTA Final -->
+        <div class="mt-8 text-center">
+          <p class="text-gray-600 mb-3 text-sm">
+            Escolha o plano ideal e comece a organizar seus formulários hoje mesmo!
+          </p>
+          <div class="mt-4">
+            <a routerLink="/calculadora-planos"
+              class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 hover:scale-105 shadow-lg text-sm">
+              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                </path>
+              </svg>
+              Não sabe qual plano escolher? Use nossa calculadora!
+            </a>
+          </div>
+        </div>
+
+
+
+        <div class="mt-8 bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div class="p-4 sm:p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+              <!-- Segurança SSL -->
+              <div class="flex flex-col items-center text-center group">
+                <div
+                  class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-200 transition-colors duration-200">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <circle cx="12" cy="16" r="1"></circle>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-semibold text-gray-900 mb-1">Pagamento Seguro</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">Todos os pagamentos são processados com segurança SSL
+                </p>
+              </div>
+
+              <!-- Suporte Dedicado -->
+              <div class="flex flex-col items-center text-center group">
+                <div
+                  class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors duration-200">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <path d="M10 9h4"></path>
+                    <path d="M10 13h4"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-semibold text-gray-900 mb-1">Suporte Premium</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">Suporte dedicado para todos os planos</p>
+              </div>
+
+              <!-- Cancelamento Flexível -->
+              <div class="flex flex-col items-center text-center group">
+                <div
+                  class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-purple-200 transition-colors duration-200">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-semibold text-gray-900 mb-1">Flexibilidade Total</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">Cancele sua assinatura a qualquer momento</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider opcional -->
+          <div class="border-t border-gray-100 px-4 py-3 sm:px-6">
+            <p class="text-xs text-gray-500 text-center">
+              <strong>Dica:</strong> Você pode fazer upgrade ou downgrade do seu plano a qualquer momento
+            </p>
+          </div>
+        </div>
+      </ng-template>
+    </main>
+  </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

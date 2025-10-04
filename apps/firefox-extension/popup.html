@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FormSync - Formulários</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      max-height: 600px;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f9fafb;
+      color: #374151;
+      overflow-x: hidden;
+    }
+
+    /* Header minimalista */
+    .header {
+      padding: 1rem;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: #4f46e5;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin: 0 auto;
+    }
+
+    .logo-icon svg {
+      width: 16px;
+      height: 16px;
+      color: white;
+      display: block;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* Conteúdo principal */
+    .main-content {
+      padding: 1rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Ação principal destacada - oculta inicialmente */
+    .main-action {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      display: none; /* Oculto até selecionar template */
+    }
+
+    .main-action.show {
+      display: block;
+    }
+
+    .main-action h3 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .main-action h3 .material-icons {
+      color: #4f46e5;
+      font-size: 1.125rem;
+    }
+
+    /* Botão principal grande */
+    .btn-primary {
+      width: 100%;
+      padding: 1rem;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Seletor de template minimalista (estilo analítico) */
+    .template-selector {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .template-selector h3 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .template-selector h3 .material-icons {
+      color: #4f46e5;
+      font-size: 1.125rem;
+    }
+
+    .template-selector-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Select minimalista (estilo analítico) */
+    .template-select {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: white;
+      color: #374151;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.75rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25rem;
+      padding-right: 2.5rem;
+    }
+
+    .template-select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .template-select:hover {
+      border-color: #9ca3af;
+    }
+
+    /* Estilização dos itens do select (igual ao componente analítico) */
+    .template-select option {
+      background: white;
+      color: #374151;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .template-select option:hover {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .template-select option:checked {
+      background: #eef2ff;
+      color: #4338ca;
+      font-weight: 600;
+    }
+
+    /* Para Firefox e outros navegadores que suportam ::-moz-focus-inner */
+    .template-select::-moz-focus-inner {
+      border: 0;
+      outline: none;
+    }
+
+    /* Para Webkit (Chrome, Safari, Edge) */
+    .template-select::-webkit-select-placeholder {
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    /* Estilo para o placeholder */
+    .template-select option[value=""] {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    /* Botões de ação minimalistas */
+    .btn-icon {
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      color: #6b7280;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+    }
+
+    .btn-icon:hover {
+      border-color: #9ca3af;
+      background: #f9fafb;
+      color: #374151;
+    }
+
+    /* Mensagem explicativa */
+    .template-message {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #0369a1;
+      line-height: 1.4;
+    }
+
+    .template-message .material-icons {
+      color: #0ea5e9;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* Informações do template */
+    .template-info {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .template-info h4 {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+
+    .campos-list {
+      list-style: none;
+    }
+
+    .campo-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.875rem;
+    }
+
+    .campo-item:last-child {
+      border-bottom: none;
+    }
+
+    .campo-nome {
+      color: #6b7280;
+    }
+
+    .campo-valor {
+      font-weight: 500;
+      color: #4f46e5;
+    }
+
+    /* Controles de paginação */
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .pagination-btn {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: #374151;
+      transition: all 0.2s ease;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: #e5e7eb;
+      border-color: #9ca3af;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-info {
+      font-size: 0.75rem;
+      color: #6b7280;
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* Ações secundárias minimalistas */
+    .secondary-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 0.875rem 1rem;
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      color: #374151;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 48px;
+    }
+
+    .btn-secondary:hover {
+      border-color: #9ca3af;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    /* Status e feedback inline */
+    .status {
+      text-align: center;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+    }
+
+    .status.success {
+      background: #f0fdf4;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .status.error {
+      background: #fef2f2;
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+
+    .status.info {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1e40af;
+    }
+
+    /* Footer compacto */
+    .footer {
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid #e5e7eb;
+      background: white;
+      margin-top: auto;
+    }
+
+    /* Loading spinner */
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 50%;
+      border-top-color: #4f46e5;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Scrollbar personalizada */
+    .main-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .main-content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 2px;
+    }
+
+    .main-content::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 2px;
+    }
+
+    .main-content::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    /* Layout flexbox para ocupar espaço disponível */
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header minimalista -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12C21 16.9706 16.9706 21 12 21C3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="title">FormSync</div>
+        <div class="subtitle">Preenchimento Inteligente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdo principal com scroll -->
+  <div class="main-content">
+    <!-- Seletor de template -->
+    <div class="template-selector">
+      <h3>
+        <span class="material-icons">list</span>
+        Selecione um Template
+      </h3>
+      
+      <div class="template-selector-row">
+        <select id="templateSelect" class="template-select">
+          <option value="">Carregando templates...</option>
+        </select>
+        <button id="refreshTemplatesBtn" class="btn-icon" title="Atualizar">
+          <span class="material-icons">refresh</span>
+        </button>
+        <button id="testConnectionBtn" class="btn-icon" title="Testar conexão">
+          <span class="material-icons">wifi</span>
+        </button>
+      </div>
+
+      <!-- Mensagem explicativa - aparece quando NÃO há template selecionado -->
+      <div id="templateMessage" class="template-message">
+        <span class="material-icons">info</span>
+        Selecione um template para preencher formulários na internet
+      </div>
+
+      <div id="templateInfo" class="template-info hidden">
+        <h4>Campos do Formulário:</h4>
+        <ul id="camposList" class="campos-list">
+          <!-- Campos serão inseridos aqui dinamicamente -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ação principal destacada - aparece quando há template selecionado -->
+    <div id="mainAction" class="main-action hidden">
+      <h3>
+        <span class="material-icons">auto_fix_high</span>
+        Preencher Formulário
+      </h3>
+      <button id="fillFormBtn" class="btn-primary">
+        <span class="material-icons">play_arrow</span>
+        Preencher Agora
+      </button>
+    </div>
+
+    <!-- Status inline -->
+    <div id="status" class="status hidden"></div>
+
+    <!-- Ações secundárias -->
+    <div class="secondary-actions">
+      <button id="createTemplateBtn" class="btn-secondary">
+        <span class="material-icons">add</span>
+        Criar Formulário
+      </button>
+      
+      <button id="manageTemplatesBtn" class="btn-secondary">
+        <span class="material-icons">settings</span>
+        Gerenciar
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer compacto -->
+  <div class="footer">
+    FormSync v1.0
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

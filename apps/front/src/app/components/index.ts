@@ -1,0 +1,34 @@
+// Componentes
+export { HomeComponent } from './home/home.component';
+export { LoginComponent } from './login/login.component';
+export { RegistrarComponent } from './registrar/registrar.component';
+export { VerificarCodigoComponent } from './verificar-codigo/verificar-codigo.component';
+export { DemoComponent } from './demo/demo.component';
+export { SucessoComponent } from './sucesso/sucesso.component';
+export { DashboardComponent } from './dashboard/dashboard.component';
+
+export { TopbarComponent } from './topbar/topbar.component';
+export { HeaderComponent } from './header/header.component';
+export { SidebarComponent } from './sidebar/sidebar.component';
+export { DadosPreenchimentoComponent } from './dados-preenchimento/dados-preenchimento.component';
+export { UploadCsvComponent } from './upload-csv/upload-csv.component';
+export { LoadingButtonComponent } from './loading-button/loading-button.component';
+export { PerfilComponent } from './perfil/perfil.component';
+export { UpgradeComponent } from './upgrade/upgrade.component';
+export { PlanCalculatorComponent } from './plan-calculator/plan-calculator.component';
+export { PlanCalculatorPageComponent } from './plan-calculator-page/plan-calculator-page.component';
+export { PlanosComparacaoComponent } from './planos-comparacao/planos-comparacao.component';
+export { FooterComponent } from './footer/footer.component';
+export { TermsComponent } from './terms/terms.component';
+export { PrivacyComponent } from './privacity/privacity.component';
+export { ChatbotComponent } from './chatbot/chatbot.component';
+export { ConfiguracaoNotificacoesComponent } from './configuracao-notificacoes/configuracao-notificacoes.component';
+export { ListaNotificacoesComponent } from './lista-notificacoes/lista-notificacoes.component';
+export { ContatoComponent } from './contato/contato.component';
+export { LoadingSkeletonComponent } from './loading-skeleton/loading-skeleton.component';
+export { TrelloComponent } from './trello/trello.component';
+export { TrelloLoginComponent } from './trello-login/trello-login.component';
+export { TrelloRegisterComponent } from './trello-register/trello-register.component';
+export { LgpdConsentComponent } from './lgpd-consent/lgpd-consent.component';
+export { FormularioCompletoComponent } from './formulario-completo/formulario-completo.component';
+export * from './analytics/analytics.component'; 

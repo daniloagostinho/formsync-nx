@@ -1,0 +1,24 @@
+/* Sucesso - Componente com Tailwind CSS */
+/* Estilos adicionais que complementam as classes do Tailwind */
+
+/* Animações personalizadas para o spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Melhorias na acessibilidade para foco */
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

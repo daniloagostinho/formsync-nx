@@ -1,0 +1,275 @@
+<div class="security-dashboard">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            <mat-icon class="title-icon">security</mat-icon>
+            <span class="title-text">Dashboard de Segurança de Arquivos</span>
+        </h1>
+
+        <div class="header-actions">
+            <button mat-raised-button color="primary" (click)="refreshDashboard()" [disabled]="refreshing" class="action-button">
+                <mat-icon>refresh</mat-icon>
+                <span class="button-text">{{ refreshing ? 'Atualizando...' : 'Atualizar' }}</span>
+            </button>
+
+            <button mat-raised-button color="accent" (click)="testSecuritySystem()" class="action-button">
+                <mat-icon>bug_report</mat-icon>
+                <span class="button-text">Testar Sistema</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p class="loading-text">Carregando dashboard de segurança...</p>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div *ngIf="!loading" class="dashboard-content">
+
+        <!-- Status Cards -->
+        <div class="status-cards">
+            <mat-card class="status-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon [color]="getSecurityStatusColor(securityStatus?.fileSecurityEnabled || false)">
+                            {{ getSecurityStatusIcon(securityStatus?.fileSecurityEnabled || false) }}
+                        </mat-icon>
+                        Segurança de Arquivos
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="status-text">
+                        {{ securityStatus?.fileSecurityEnabled ? 'Ativo' : 'Inativo' }}
+                    </p>
+                    <p class="status-details">
+                        Máximo: {{ securityStatus?.maxFileSize || '5MB' }}
+                    </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="status-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon [color]="getSecurityStatusColor(securityStatus?.malwareScanEnabled || false)">
+                            {{ getSecurityStatusIcon(securityStatus?.malwareScanEnabled || false) }}
+                        </mat-icon>
+                        Scan de Malware
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="status-text">
+                        {{ securityStatus?.malwareScanEnabled ? 'Ativo' : 'Inativo' }}
+                    </p>
+                    <p class="status-details">
+                        Versão: {{ securityStatus?.scannerVersion || '1.0.0' }}
+                    </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="status-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon [color]="getSecurityStatusColor(securityStatus?.quarantineEnabled || false)">
+                            {{ getSecurityStatusIcon(securityStatus?.quarantineEnabled || false) }}
+                        </mat-icon>
+                        Sistema de Quarentena
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="status-text">
+                        {{ securityStatus?.quarantineEnabled ? 'Ativo' : 'Inativo' }}
+                    </p>
+                    <p class="status-details">
+                        Arquivos: {{ securityStatus?.quarantinedFilesCount || 0 }}
+                    </p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Metrics Section -->
+        <mat-card class="metrics-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>analytics</mat-icon>
+                    Métricas de Segurança
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-value">{{ securityMetrics.totalFilesScanned }}</div>
+                        <div class="metric-label">Arquivos Escaneados</div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-value">{{ securityMetrics.filesRejected }}</div>
+                        <div class="metric-label">Arquivos Rejeitados</div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-value">{{ securityMetrics.filesQuarantined }}</div>
+                        <div class="metric-label">Em Quarentena</div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-value">{{ securityMetrics.malwareDetected }}</div>
+                        <div class="metric-label">Malware Detectado</div>
+                    </div>
+                </div>
+
+                <div class="last-scan">
+                    <p><strong>Último Scan:</strong> {{ securityMetrics.lastScan | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Extensions Info -->
+        <mat-card class="extensions-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>extension</mat-icon>
+                    Configurações de Extensões
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="extensions-grid">
+                    <div class="extension-section">
+                        <h4>Permitidas</h4>
+                        <div class="extension-chips">
+                            <mat-chip *ngFor="let ext of securityStatus?.allowedExtensions?.split(',')" color="accent"
+                                selected>
+                                {{ ext.trim() }}
+                            </mat-chip>
+                        </div>
+                    </div>
+
+                    <div class="extension-section">
+                        <h4>Bloqueadas</h4>
+                        <div class="extension-chips">
+                            <mat-chip *ngFor="let ext of securityStatus?.blockedExtensions?.split(',')" color="warn"
+                                selected>
+                                {{ ext.trim() }}
+                            </mat-chip>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Quarantined Files -->
+        <mat-card class="quarantine-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>warning</mat-icon>
+                    Arquivos em Quarentena
+                    <mat-chip *ngIf="quarantinedFiles.length > 0" color="warn" class="quarantine-count">
+                        {{ quarantinedFiles.length }}
+                    </mat-chip>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngIf="quarantinedFiles.length === 0" class="no-quarantine">
+                    <mat-icon class="no-quarantine-icon">check_circle</mat-icon>
+                    <p>Nenhum arquivo em quarentena</p>
+                </div>
+
+                <div *ngIf="quarantinedFiles.length > 0" class="quarantine-table">
+                    <table mat-table [dataSource]="quarantinedFiles" class="quarantine-table">
+
+                        <!-- Nome do Arquivo -->
+                        <ng-container matColumnDef="fileName">
+                            <th mat-header-cell *matHeaderCellDef>Arquivo</th>
+                            <td mat-cell *matCellDef="let file">
+                                <div class="file-info">
+                                    <mat-icon class="file-icon">{{ getFileTypeIcon(file.fileName) }}</mat-icon>
+                                    <span class="file-name">{{ file.fileName }}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Timestamp -->
+                        <ng-container matColumnDef="timestamp">
+                            <th mat-header-cell *matHeaderCellDef>Data/Hora</th>
+                            <td mat-cell *matCellDef="let file">{{ file.timestamp }}</td>
+                        </ng-container>
+
+                        <!-- Motivo -->
+                        <ng-container matColumnDef="reason">
+                            <th mat-header-cell *matHeaderCellDef>Motivo</th>
+                            <td mat-cell *matCellDef="let file">
+                                <mat-chip color="warn" class="reason-chip">
+                                    {{ file.reason }}
+                                </mat-chip>
+                            </td>
+                        </ng-container>
+
+                        <!-- Ações -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Ações</th>
+                            <td mat-cell *matCellDef="let file">
+                                <button mat-icon-button color="primary"
+                                    (click)="releaseFromQuarantine(file.quarantinePath)"
+                                    matTooltip="Liberar da quarentena">
+                                    <mat-icon>restore_from_trash</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Security Logs -->
+        <mat-card class="logs-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>history</mat-icon>
+                    Logs de Segurança
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Últimas Atividades de Segurança
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="security-logs">
+                        <div class="log-item">
+                            <mat-icon class="log-icon success">check_circle</mat-icon>
+                            <div class="log-content">
+                                <div class="log-message">Sistema de segurança verificado</div>
+                                <div class="log-timestamp">{{ currentTime | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+                            </div>
+                        </div>
+
+                        <div class="log-item">
+                            <mat-icon class="log-icon warning">warning</mat-icon>
+                            <div class="log-content">
+                                <div class="log-message">Arquivo CSV validado com sucesso</div>
+                                <div class="log-timestamp">{{ fiveMinutesAgo | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+                            </div>
+                        </div>
+
+                        <div class="log-item">
+                            <mat-icon class="log-icon info">info</mat-icon>
+                            <div class="log-content">
+                                <div class="log-message">Scan de malware concluído</div>
+                                <div class="log-timestamp">{{ tenMinutesAgo | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

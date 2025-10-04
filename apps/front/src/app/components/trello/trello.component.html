@@ -1,0 +1,857 @@
+<!-- Header/Navigation -->
+<header
+  class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-[60] h-16 md:h-16 h-20 border-b border-gray-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-5 h-full flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <a routerLink="/" class="flex items-center gap-2">
+        <img src="assets/images/formsync-logo.svg" alt="FormSync Logo" class="w-8 h-8 mt-2">
+        <span class="text-lg sm:text-xl font-bold text-blue-600">FormSync</span>
+      </a>
+    </div>
+
+    <!-- Desktop CTA Buttons - Hidden on mobile -->
+    <div class="hidden md:flex gap-3 lg:gap-4 items-center">
+      <a routerLink="/login"
+        class="text-gray-700 font-medium hover:text-gray-900 hover:bg-gray-50 rounded-lg px-4 py-2.5 transition-colors text-base min-h-[44px] flex items-center">Entrar</a>
+      <a routerLink="/registrar"
+        class="bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-200 text-base min-h-[48px] flex items-center">
+        Começar agora
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      class="md:hidden p-2 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+      (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen" aria-label="Abrir menu de navegação">
+      <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path *ngIf="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+        <path *ngIf="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div *ngIf="mobileMenuOpen"
+    class="md:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-[55] transition-opacity duration-300"
+    (click)="closeMobileMenu()">
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="mobileMenuOpen"
+    class="md:hidden fixed top-16 left-0 right-0 bg-white z-[60] border-t border-gray-100 transform transition-transform duration-300 ease-in-out">
+
+    <!-- Menu Header -->
+    <div class="px-4 py-3 border-b border-gray-100 bg-gray-50">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-medium text-gray-600">Menu</span>
+        <button (click)="closeMobileMenu()" class="p-1 rounded-lg hover:bg-gray-200 transition-colors">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Content -->
+    <nav class="px-4 py-4 space-y-2">
+      <!-- Login Link -->
+      <a routerLink="/login"
+        class="block w-full text-left px-4 py-3 text-gray-700 font-medium hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 min-h-[48px] flex items-center"
+        (click)="closeMobileMenu()">
+        <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+        </svg>
+        Entrar
+      </a>
+
+      <!-- CTA Button -->
+      <a routerLink="/registrar"
+        class="block w-full text-center px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 min-h-[48px] flex items-center justify-center mt-4"
+        (click)="closeMobileMenu()">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+        Começar agora
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section - Clean Trello Style -->
+<section class="relative min-h-screen flex items-center justify-center bg-white">
+  <!-- Background Pattern - Subtle and Clean -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-20 left-10 w-2 h-2 bg-blue-500 rounded-full"></div>
+    <div class="absolute top-40 right-20 w-1.5 h-1.5 bg-indigo-500 rounded-full"></div>
+    <div class="absolute bottom-40 left-1/4 w-1 h-1 bg-purple-500 rounded-full"></div>
+    <div class="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-blue-600 rounded-full"></div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center mt-16 sm:mt-20">
+    <!-- Main Headline - Clean and Impactful -->
+    <h1
+      class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 sm:mb-8 text-gray-900 leading-tight mt-16">
+      Automatize formulários<br />
+      <span class="text-blue-600">em qualquer site</span>
+    </h1>
+
+    <!-- Subtitle - Clear and Concise -->
+    <p class="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
+      A ferramenta definitiva para profissionais que valorizam tempo e precisão.<br class="hidden sm:block" />
+      <span class="text-gray-800 font-semibold">Sistema multiplataforma</span> —
+      <span class="text-blue-600 font-semibold">Web, Desktop, Mobile e Extensões</span><br class="hidden sm:block" />
+      <span class="text-gray-800 font-semibold">RH, Marketing, Vendas, CRMS, Cadastros de grandes volumes de</span> —
+      <span class="text-blue-600 font-semibold">todos se beneficiam</span>
+    </p>
+
+    <!-- CTA Buttons - Clean and Professional -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 px-2">
+      <!-- Primary CTA -->
+      <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'PESSOAL' }"
+        class="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white font-semibold text-base sm:text-lg rounded-lg hover:bg-blue-700 transition-all duration-200 w-full sm:w-auto shadow-lg hover:shadow-xl min-h-[48px] sm:min-h-[56px]">
+        <span>Começar Agora</span>
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+      </a>
+
+      <!-- Secondary CTA -->
+      <button
+        class="group flex items-center justify-center gap-3 px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 w-full sm:w-auto min-h-[48px] sm:min-h-[56px]">
+        <div
+          class="w-8 h-8 sm:w-10 sm:h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
+        <span class="font-semibold text-sm sm:text-base">Ver Demonstração</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section - Clean and Professional -->
+<section id="features" class="py-20 px-6 bg-gray-50 border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        O que é o FormSync?
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Uma ferramenta simples e poderosa para automatizar o preenchimento de formulários em qualquer plataforma
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="text-center group">
+        <div
+          class="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-200">
+          <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Painel de Formulários
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          Cadastre seus dados uma única vez e crie formulários personalizados para cada site.
+          <span class="font-semibold text-gray-900">Design limpo e premium</span>, muito fácil de usar.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="text-center group">
+        <div
+          class="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Multiplataforma
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          Extensões para Chrome e Firefox, aplicativos Android e iOS em breve.
+          Preencha automaticamente qualquer formulário usando os dados que você cadastrou no painel.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="text-center group">
+        <div
+          class="w-16 h-16 mx-auto mb-6 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-200 transition-colors duration-200">
+          <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Automação Inteligente
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          Preenchimento automático em qualquer site com inteligência artificial
+          que reconhece campos e preenche com precisão seus dados cadastrados.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-gray-50 border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+      Veja Como funciona
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
+      <div
+        class="text-center p-8 sm:p-10 lg:p-12 rounded-2xl hover:-translate-y-1 transition-all duration-300 bg-white border border-gray-100">
+        <div
+          class="w-16 h-16 sm:w-18 sm:h-18 mx-auto mb-6 sm:mb-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl flex items-center justify-center">
+          <svg class="w-8 h-8 sm:w-9 sm:h-9 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Crie o formulário
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Cadastre seus dados uma única vez. Nome, email, telefone, experiência
+          - organize como quiser.
+        </p>
+      </div>
+
+      <div
+        class="text-center p-8 sm:p-10 lg:p-12 rounded-2xl hover:-translate-y-1 transition-all duration-300 bg-white border border-gray-100">
+        <div
+          class="w-16 h-16 sm:w-18 sm:h-18 mx-auto mb-6 sm:mb-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl flex items-center justify-center">
+          <svg class="w-8 h-8 sm:w-9 sm:h-9 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+            </path>
+          </svg>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Sistema de identificação avançada
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Nosso sistema identifica automaticamente os campos em qualquer site e
+          conecta com seus dados.
+        </p>
+      </div>
+
+      <div
+        class="text-center p-8 sm:p-10 lg:p-12 rounded-2xl hover:-translate-y-1 transition-all duration-300 bg-white border border-gray-100">
+        <div
+          class="w-16 h-16 sm:w-18 sm:h-18 mx-auto mb-6 sm:mb-8 bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl flex items-center justify-center">
+          <svg class="w-8 h-8 sm:w-9 sm:h-9 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Preenche em 3 segundos
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Um clique e pronto. Todos os campos preenchidos automaticamente em
+          qualquer formulário.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 bg-white border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+      Funciona em qualquer plataforma
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+      <div class="text-center p-6 sm:p-8 lg:p-10 rounded-xl hover:-translate-y-1 transition-all duration-200">
+        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 flex justify-center items-center">
+          <img src="/assets/images/icon-chrome.png" alt="Chrome" class="w-20 h-20 object-contain" />
+        </div>
+        <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Google Chrome
+        </h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+          Instale a extensão na Chrome Web Store e comece a preencher
+          formulários automaticamente
+        </p>
+        <a href="https://chromewebstore.google.com/detail/formsync-formul%C3%A1rio-build/igfianphgkecejlpchhainhkmaecdipi?authuser=0&hl=pt-BR&pli=1"
+          target="_blank" rel="noopener noreferrer"
+          class="w-full sm:w-auto bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base min-h-[48px] inline-flex items-center justify-center">
+          Ver na loja
+        </a>
+      </div>
+
+      <div class="text-center p-6 sm:p-8 lg:p-10 rounded-xl hover:-translate-y-1 transition-all duration-200">
+        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 flex justify-center items-center">
+          <img src="/assets/images/icon-firefox.png" alt="Firefox" class="w-20 h-20 object-contain" />
+        </div>
+        <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Mozilla Firefox
+        </h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+          Extensão para Firefox está aguardando a aprovação da Mozilla.
+        </p>
+        <button
+          class="w-full sm:w-auto bg-gray-400 text-white font-semibold px-6 py-3 rounded-lg cursor-not-allowed transition-colors text-sm sm:text-base min-h-[48px]"
+          disabled>
+          Em breve
+        </button>
+      </div>
+
+      <div class="text-center p-6 sm:p-8 lg:p-10 rounded-xl hover:-translate-y-1 transition-all duration-200">
+        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 flex justify-center items-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12.01 2.16c-5.37 0-9.71 4.35-9.71 9.71s4.35 9.71 9.71 9.71 9.71-4.35 9.71-9.71-4.35-9.71-9.71-9.71zm.01 1.16c4.75 0 8.6 3.85 8.6 8.6s-3.85 8.6-8.6 8.6-8.6-3.85-8.6-8.6 3.85-8.6 8.6-8.6zm-.05 1.36c-.41 0-.75.34-.75.75s.34.75.75.75.75-.34.75-.75-.34-.75-.75-.75zm-1.6 1.83c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm3.2 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm-1.6 1.83c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm3.2 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm-1.6 1.83c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm3.2 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm-1.6 1.83c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm3.2 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5z" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Microsoft Edge
+        </h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+          A extensão para Microsoft Edge está aguardando a aprovação da Microsoft.
+        </p>
+        <button
+          class="w-full sm:w-auto bg-gray-400 text-white font-semibold px-6 py-3 rounded-lg cursor-not-allowed transition-colors text-sm sm:text-base min-h-[48px]"
+          disabled>
+          Em breve
+        </button>
+      </div>
+      <div class="text-center p-6 sm:p-8 lg:p-10 rounded-xl hover:-translate-y-1 transition-all duration-200">
+        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 flex justify-center items-center">
+          <div class="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5352 8.9519 13.8067 8.3379 12 8.3379s-3.5352.614-5.1367 1.0694L4.841 5.9043a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Android
+        </h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+          Aplicativo Android estará disponível em breve.
+          <span class="text-orange-600 font-semibold">Em desenvolvimento</span>
+        </p>
+        <button
+          class="w-full sm:w-auto bg-gray-400 text-white font-semibold px-6 py-3 rounded-lg cursor-not-allowed transition-colors text-sm sm:text-base min-h-[48px]"
+          disabled>
+          Em breve
+        </button>
+      </div>
+
+      <div class="text-center p-6 sm:p-8 lg:p-10 rounded-xl hover:-translate-y-1 transition-all duration-200">
+        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 flex justify-center items-center">
+          <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          iOS
+        </h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+          Aplicativo iOS estará disponível em breve.
+          <span class="text-orange-600 font-semibold">Em desenvolvimento</span>
+        </p>
+        <button
+          class="w-full sm:w-auto bg-gray-400 text-white font-semibold px-6 py-3 rounded-lg cursor-not-allowed transition-colors text-sm sm:text-base min-h-[48px]"
+          disabled>
+          Em breve
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-8 sm:mb-12 lg:mb-16 text-gray-800">
+      Por que escolher o FormSync?
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-10">
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Formulários personalizados
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Crie formulários únicos para cada site que você usa, com design limpo
+          e premium.
+        </p>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          100% seguro
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          O FormSync usa criptografia de ponta a ponta. Ou seja, ninguém pode
+          ver suas mensagens.
+        </p>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Mapeamento automático
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Sistema de identificação avançada detecta campos automaticamente em
+          qualquer site.
+        </p>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Multiplataforma
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Chrome, Firefox, Android e iOS - funciona em todas as plataformas e sistemas
+          operacionais.
+        </p>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Histórico completo
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Acompanhe todos os preenchimentos e mantenha controle total sobre suas
+          atividades.
+        </p>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-xl bg-gray-50/30 hover:-translate-y-1 transition-transform duration-200">
+        <h4 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Suporte especializado
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Equipe dedicada para resolver suas dúvidas rapidamente e com
+          eficiência.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href="#" class="text-blue-600 font-medium text-sm sm:text-base hover:underline">Ver todos os benefícios</a>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 bg-white border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+      Casos de uso reais
+    </h3>
+    <p class="text-center text-gray-600 mb-8 sm:mb-12 lg:mb-16 text-base sm:text-lg">
+      Veja como o FormSync está transformando o trabalho de profissionais em
+      diferentes áreas
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+      <div class="bg-gray-50/50 p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <h4 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Recursos Humanos
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Preenchimento automático de centenas de candidaturas em plataformas de
+          emprego, economizando horas de trabalho manual.
+        </p>
+      </div>
+
+      <div class="bg-gray-50/50 p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <h4 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Marketing Digital
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Criação e preenchimento de formulários de leads em múltiplas campanhas
+          simultaneamente.
+        </p>
+      </div>
+
+      <div class="bg-gray-50/50 p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <h4 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Vendas e CRM
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          Automação de cadastros de clientes e prospects em sistemas de CRM com
+          precisão total.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-center mt-8 sm:mt-10">
+      <a href="#" class="text-blue-600 font-medium text-sm sm:text-base hover:underline">Ver todos os casos de uso</a>
+    </div>
+  </div>
+</section>
+
+<!--
+<section id="plans" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+      Escolha quantos formulários você pode automatizar
+    </h3>
+    <p class="text-center text-gray-600 mb-8 sm:mb-12 lg:mb-16 text-base sm:text-lg">
+      Comece com o plano que faz sentido para sua profissão e faça upgrade
+      quando precisar
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-10">
+      <div
+        class="border-2 border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10 hover:border-indigo-400 hover:-translate-y-2 transition-all duration-300 bg-white shadow-lg hover:shadow-2xl hover:shadow-indigo-100/50">
+        <div class="text-center mb-6 sm:mb-8">
+          <div
+            class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4 border border-gray-200">
+            Pessoal
+          </div>
+          <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+            Pessoal
+          </h3>
+          <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+            5 formulários diferentes
+          </p>
+          <div class="flex items-baseline justify-center gap-2">
+            <span class="text-3xl sm:text-4xl font-bold text-gray-800">R$ 14,90</span>
+            <span class="text-gray-600 text-sm sm:text-base">/mês</span>
+          </div>
+        </div>
+
+        <hr class="my-6 sm:my-8 border-gray-200" />
+
+        <div class="mb-6 sm:mb-8">
+          <ul class="space-y-2">
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Ideal para quem preenche poucos formulários na internet
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Até 150 campos no total
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              App desktop completo
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Suporte por email
+            </li>
+          </ul>
+        </div>
+
+        <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'PESSOAL' }"
+          class="w-full bg-gray-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-gray-700 transition-all duration-200 text-base sm:text-lg text-center block min-h-[56px] flex items-center justify-center shadow-lg hover:shadow-xl border border-gray-700">
+          Começar Pessoal
+        </a>
+      </div>
+
+      <div
+        class="border-2 border-indigo-300 rounded-2xl p-6 sm:p-8 lg:p-10 hover:border-indigo-500 hover:-translate-y-2 transition-all duration-300 relative bg-gradient-to-br from-indigo-50 to-white shadow-xl hover:shadow-2xl hover:shadow-indigo-200/50">
+        <div class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+          <span
+            class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg border border-indigo-500">Mais
+            Popular</span>
+        </div>
+
+        <div class="text-center mb-6 sm:mb-8">
+          <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+            Profissional
+          </h3>
+          <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+            50 formulários diferentes
+          </p>
+          <div class="flex items-baseline justify-center gap-2">
+            <span class="text-3xl sm:text-4xl font-bold text-indigo-600">R$ 39,90</span>
+            <span class="text-gray-600 text-sm sm:text-base">por mês</span>
+          </div>
+        </div>
+
+        <hr class="my-6 sm:my-8 border-indigo-200" />
+
+        <div class="mb-6 sm:mb-8">
+          <ul class="space-y-2">
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-indigo-500 font-bold">✓</span>
+              Ideal para profissionais que preenchem muitos formulários
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-indigo-500 font-bold">✓</span>
+              Até 1000 campos no total
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-indigo-500 font-bold">✓</span>
+              Relatórios de uso e importação CSV
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-indigo-500 font-bold">✓</span>
+              Suporte prioritário
+            </li>
+          </ul>
+        </div>
+
+        <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'PROFISSIONAL' }"
+          class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 text-base sm:text-lg text-center block min-h-[56px] flex items-center justify-center shadow-lg hover:shadow-xl border border-indigo-500">
+          Começar Agora
+        </a>
+      </div>
+
+      <div
+        class="border-2 border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10 hover:border-purple-400 hover:-translate-y-2 transition-all duration-300 bg-white shadow-lg hover:shadow-2xl hover:shadow-purple-100/50">
+        <div class="text-center mb-6 sm:mb-8">
+          <div
+            class="inline-block bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4 border border-purple-200">
+            Empresarial
+          </div>
+          <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-gray-800">
+            Empresarial
+          </h3>
+          <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+            200 formulários diferentes
+          </p>
+          <div class="flex items-baseline justify-center gap-2">
+            <span class="text-3xl sm:text-4xl font-bold text-gray-800">R$ 149,90</span>
+            <span class="text-gray-600 text-sm sm:text-base">/mês</span>
+          </div>
+        </div>
+
+        <hr class="my-6 sm:my-8 border-gray-200" />
+
+        <div class="mb-6 sm:mb-8">
+          <ul class="space-y-2">
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Para equipes de RH, vendas, marketing que preenchem centenas de
+              formulários
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Até 5000 campos no total
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Gestão para equipes
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Relatórios empresariais
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Importação em lote
+            </li>
+            <li class="text-sm sm:text-base text-gray-600 relative pl-5 sm:pl-6">
+              <span class="absolute left-0 text-green-500 font-bold">✓</span>
+              Suporte 24/7 + Telefone
+            </li>
+          </ul>
+        </div>
+
+        <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'EMPRESARIAL' }"
+          class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:from-purple-500 hover:to-indigo-500 transition-all duration-200 text-base sm:text-lg text-center block min-h-[56px] flex items-center justify-center shadow-lg hover:shadow-xl border border-purple-500">
+          Falar com Especialista
+        </a>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href="#" class="text-blue-600 font-medium text-base hover:underline">Ver todos os planos</a>
+    </div>
+  </div>
+</section>
+
+-->
+<section id="testimonials" class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 bg-gray-50 border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+      O que nossos usuários dizem
+    </h3>
+    <p class="text-center text-gray-600 mb-8 sm:mb-12 lg:mb-16 text-base sm:text-lg">
+      Profissionais reais economizando horas todos os dias em qualquer área
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+      <div class="bg-white p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <blockquote class="text-base sm:text-lg italic text-gray-800 mb-4 sm:mb-6 leading-relaxed">
+          "Criei um formulário e agora preencho qualquer vaga em
+          <strong>3 segundos</strong>. Antes perdia 15 minutos digitando os
+          mesmos dados."
+        </blockquote>
+        <div class="mb-4">
+          <strong class="block text-sm sm:text-base text-gray-800 mb-1">Ana Paula Silva</strong>
+          <span class="block text-gray-600 text-xs sm:text-sm mb-1">Desenvolvedora Frontend</span>
+        </div>
+        <a href="#" class="text-blue-600 font-medium text-xs sm:text-sm hover:underline">Ler história completa</a>
+      </div>
+
+      <div class="bg-white p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <blockquote class="text-base sm:text-lg italic text-gray-800 mb-4 sm:mb-6 leading-relaxed">
+          "O sistema identifica automaticamente os campos e preenche com
+          <strong>100% de precisão</strong>. Não preciso mais adaptar meus dados
+          para cada site!"
+        </blockquote>
+        <div class="mb-4">
+          <strong class="block text-sm sm:text-base text-gray-800 mb-1">Carlos Mendes</strong>
+          <span class="block text-gray-600 text-xs sm:text-sm mb-1">Analista de Sistemas</span>
+        </div>
+        <a href="#" class="text-blue-600 font-medium text-xs sm:text-sm hover:underline">Ler história completa</a>
+      </div>
+
+      <div class="bg-white p-6 sm:p-8 lg:p-10 rounded-xl border border-gray-100">
+        <blockquote class="text-base sm:text-lg italic text-gray-800 mb-4 sm:mb-6 leading-relaxed">
+          "Criei formulários para LinkedIn, Indeed e InfoJobs. Agora preencho
+          qualquer vaga em <strong>3 segundos</strong>. Economizo
+          <strong>2 horas por dia</strong>!"
+        </blockquote>
+        <div class="mb-4">
+          <strong class="block text-sm sm:text-base text-gray-800 mb-1">Mariana Costa</strong>
+          <span class="block text-gray-600 text-xs sm:text-sm mb-1">UX Designer</span>
+        </div>
+        <a href="#" class="text-blue-600 font-medium text-xs sm:text-sm hover:underline">Ler história completa</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 bg-white border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+      <div class="text-center" *ngFor="let stat of stats">
+        <div class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-600 mb-3 sm:mb-4">
+          {{ stat.value }}
+        </div>
+        <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+          {{ stat.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-5 bg-gray-50 text-center border-t border-gray-300">
+  <div class="max-w-6xl mx-auto">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 lg:mb-10 text-gray-800">
+        Pronto para automatizar seus formulários?
+      </h2>
+      <p class="text-center text-gray-600 mb-8 sm:mb-12 lg:mb-16 text-base sm:text-lg">
+        Ferramenta universal para qualquer profissional! O FormSync é muito
+        simples de usar: cadastre uma única vez seus dados e preencha milhares
+        de formulários automaticamente.
+        <strong>7 dias de teste grátis</strong> - comece hoje mesmo.
+      </p>
+
+      <!-- CTA Principal - Único por tela -->
+      <div class="mb-8 sm:mb-10">
+        <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'PESSOAL' }"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-4 px-8 py-5 bg-blue-600 text-white font-bold text-lg sm:text-xl rounded-2xl hover:bg-blue-700 transition-all duration-200 min-h-[60px] shadow-2xl hover:shadow-blue-500/25 hover:scale-105">
+          Começar agora
+        </a>
+      </div>
+
+      <!-- Link Secundário -->
+      <div>
+        <!--
+        <a [routerLink]="['/registrar']" [queryParams]="{ plano: 'PESSOAL' }"
+          class="text-gray-600 font-semibold hover:text-gray-900 transition-colors duration-200 py-2 text-sm sm:text-base">
+          Ver todos os planos →
+        </a>  
+      -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 px-4 sm:px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-white rounded-xl">
+      <div class="p-4 sm:p-6 lg:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div class="flex flex-col items-center text-center group">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-green-100 transition-colors duration-200">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <circle cx="12" cy="16" r="1"></circle>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-2">
+              Pagamento Seguro
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              Todos os pagamentos são processados com segurança SSL
+            </p>
+          </div>
+
+          <!-- Suporte Dedicado -->
+          <div class="flex flex-col items-center text-center group">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-blue-100 transition-colors duration-200">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="M10 9h4"></path>
+                <path d="M10 13h4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-2">
+              Suporte Premium
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              Suporte dedicado para todos os planos
+            </p>
+          </div>
+
+          <!-- Cancelamento Flexível -->
+          <div class="flex flex-col items-center text-center group">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-purple-100 transition-colors duration-200">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </div>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-2">
+              Flexibilidade Total
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              Cancele sua assinatura a qualquer momento
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider opcional -->
+      <div class="border-t border-gray-100 px-4 sm:px-6 py-3 sm:py-4">
+        <p class="text-xs text-gray-500 text-center">
+          <strong>Dica:</strong> Você pode fazer upgrade ou downgrade do seu
+          plano a qualquer momento
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,382 @@
+<!-- Container principal responsivo -->
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-12">
+      <div class="mb-6">
+        <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+            </path>
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-3">Termos de Uso</h1>
+        <p class="text-2xl font-semibold text-indigo-600 mb-2">FormSync - Versão Beta</p>
+        <p class="text-sm text-gray-500">Última atualização: {{ dataAtualizacao | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <div class="legal-content">
+      <!-- Introdução -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          1. Apresentação
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          O <strong class="font-semibold text-gray-900">FormSync</strong> é uma plataforma online que oferece automação
+          e
+          facilitação no preenchimento de formulários, com diferentes planos de assinatura, voltada para pessoas físicas
+          e jurídicas. <strong class="text-orange-600">Esta é uma versão beta em desenvolvimento.</strong>
+        </p>
+      </div>
+
+      <!-- Aceitação dos Termos -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          2. Aceitação dos Termos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Ao utilizar o FormSync, o usuário concorda integralmente com estes Termos de Uso e nossa <a
+            routerLink="/privacidade" class="text-indigo-600 hover:text-indigo-800 underline font-medium">Política de
+            Privacidade</a>.
+        </p>
+      </div>
+
+      <!-- Cadastro e Acesso -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+          </div>
+          3. Cadastro e Acesso
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          O usuário é responsável por fornecer informações verdadeiras e manter a confidencialidade de suas credenciais.
+          O uso indevido, compartilhamento ou divulgação de credenciais é de inteira responsabilidade do usuário.
+        </p>
+      </div>
+
+      <!-- Planos, Pagamentos e Reembolsos -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+            </svg>
+          </div>
+          4. Planos, Pagamentos e Reembolsos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Os planos pagos são cobrados conforme descrito na plataforma. O usuário pode cancelar a assinatura a qualquer
+          momento, mas não haverá reembolso proporcional ao período não utilizado, exceto nos casos previstos em lei. Em
+          caso de fraude, uso indevido ou violação destes termos, a assinatura poderá ser suspensa ou cancelada sem
+          reembolso.
+        </p>
+      </div>
+
+      <!-- Direitos e Deveres do Usuário -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+              </path>
+            </svg>
+          </div>
+          5. Direitos e Deveres do Usuário
+        </h2>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Utilizar a plataforma de forma ética, lícita e respeitosa.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Não praticar atos que possam prejudicar o FormSync, outros usuários ou
+              terceiros.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Proibições e Uso Indevido -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z">
+              </path>
+            </svg>
+          </div>
+          6. Proibições e Uso Indevido
+        </h2>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p class="text-red-700 leading-relaxed">
+            É proibido utilizar o FormSync para fins ilícitos, automatizar ataques, fraudar processos, ou tentar acessar
+            dados de outros usuários. Empresas ou pessoas que tentarem burlar o sistema, realizar engenharia reversa, ou
+            utilizar o serviço para fins concorrenciais terão o acesso bloqueado e poderão ser responsabilizados civil e
+            criminalmente.
+          </p>
+        </div>
+      </div>
+
+      <!-- Limitação de Responsabilidade -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+              </path>
+            </svg>
+          </div>
+          7. Limitação de Responsabilidade
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          O FormSync não se responsabiliza por prejuízos decorrentes de uso indevido, indisponibilidade temporária,
+          falhas de terceiros, ou inserção de dados incorretos pelo usuário. O serviço é fornecido "como está", sem
+          garantias de adequação a fins específicos.
+        </p>
+      </div>
+
+      <!-- Política de Reembolso -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </div>
+          8. Política de Reembolso
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Reembolsos só serão realizados em caso de cobrança indevida comprovada ou nos casos previstos pelo Código de
+          Defesa do Consumidor. Não haverá reembolso por insatisfação subjetiva, uso parcial do serviço, ou
+          descumprimento destes termos.
+        </p>
+      </div>
+
+      <!-- Propriedade Intelectual -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7.21 14c0 0-2.63 2-2.63 3.31A2.63 2.63 0 007.21 20c0 0 2.63-2 2.63-3.31A2.63 2.63 0 007.21 14zM14.42 14c0 0-2.63 2-2.63 3.31A2.63 2.63 0 0014.42 20c0 0 2.63-2 2.63-3.31A2.63 2.63 0 0014.42 14zM9.6 9.6c0 0-2.63 2-2.63 3.31A2.63 2.63 0 009.6 15.6c0 0 2.63-2 2.63-3.31A2.63 2.63 0 009.6 9.6zM16.8 9.6c0 0-2.63 2-2.63 3.31A2.63 2.63 0 0016.8 15.6c0 0 2.63-2 2.63-3.31A2.63 2.63 0 0016.8 9.6z">
+              </path>
+            </svg>
+          </div>
+          9. Propriedade Intelectual
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Todo o conteúdo, marca, código-fonte e funcionalidades do FormSync são de propriedade exclusiva da plataforma,
+          sendo vedada sua reprodução, distribuição ou engenharia reversa.
+        </p>
+      </div>
+
+      <!-- Rescisão -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"></path>
+            </svg>
+          </div>
+          10. Rescisão
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          O FormSync pode rescindir o acesso do usuário a qualquer momento em caso de violação destes termos, sem
+          direito a reembolso.
+        </p>
+      </div>
+
+      <!-- Alterações nos Termos -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </div>
+          11. Alterações nos Termos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Estes termos podem ser alterados a qualquer momento, sendo responsabilidade do usuário consultá-los
+          periodicamente. O uso continuado do sistema após alterações constitui aceitação dos novos termos.
+        </p>
+      </div>
+
+      <!-- Foro e Legislação Aplicável -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          12. Foro e Legislação Aplicável
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Fica eleito o foro da comarca de São Paulo, Brasil, para dirimir quaisquer dúvidas oriundas destes
+          termos.
+        </p>
+      </div>
+
+      <!-- Versão Beta - Limitações e Características -->
+      <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl p-8 border border-orange-200 mb-8">
+        <h2 class="flex items-center gap-3 text-2xl font-semibold text-orange-900 mb-6">
+          <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z">
+              </path>
+            </svg>
+          </div>
+          ⚠️ Versão Beta - Limitações e Características
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg p-4 border border-orange-200">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-orange-800 mb-3">
+              <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              Período de Teste
+            </h3>
+            <ul class="space-y-2 text-orange-700 text-sm">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <strong>Início:</strong> {{ dataInicioBeta | date:'dd/MM/yyyy' }}
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <strong>Fim previsto:</strong> {{ dataFimBeta | date:'dd/MM/yyyy' }}
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <strong>Duração:</strong> 4 meses (período beta)
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 border border-orange-200">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-orange-800 mb-3">
+              <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              Limitações da Beta
+            </h3>
+            <ul class="space-y-2 text-orange-700 text-sm">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                Funcionalidades em desenvolvimento
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                Possíveis instabilidades
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                Suporte limitado
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 bg-orange-100 border border-orange-300 rounded-lg p-4">
+          <h4 class="font-semibold text-orange-800 mb-2">📋 Termos Específicos da Versão Beta:</h4>
+          <ul class="space-y-2 text-orange-700 text-sm">
+            <li class="flex items-start gap-2">
+              <div class="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+              <span><strong>Feedback obrigatório:</strong> Usuários beta devem fornecer feedback sobre funcionalidades e
+                reportar bugs encontrados.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+              <span><strong>Sem garantias:</strong> O serviço é fornecido "como está" sem garantias de funcionamento
+                contínuo ou estabilidade.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+              <span><strong>Migração automática:</strong> Ao final da beta, usuários serão migrados para a versão
+                estável ou notificados sobre mudanças.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+              <span><strong>Limitação de responsabilidade:</strong> Durante a beta, nossa responsabilidade é limitada ao
+                máximo permitido por lei.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contato -->
+      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-8 border border-indigo-200">
+        <div class="text-center">
+          <h3 class="flex items-center justify-center gap-3 text-2xl font-semibold text-indigo-900 mb-4">
+            <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                </path>
+              </svg>
+            </div>
+            Dúvidas sobre os Termos?
+          </h3>
+          <p class="text-indigo-700 leading-relaxed mb-6 max-w-2xl mx-auto">
+            Se você tem dúvidas sobre estes termos de uso, entre em contato conosco.
+          </p>
+          <a routerLink="/contato"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+              </path>
+            </svg>
+            Fale Conosco
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

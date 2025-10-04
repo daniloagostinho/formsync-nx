@@ -1,0 +1,51 @@
+# Configurações de Segurança de Arquivos
+app:
+  security:
+    file:
+      # Habilitar sistema de segurança de arquivos
+      enabled: true
+      
+      # Configurações de quarentena
+      quarantine:
+        enabled: true
+        path: ./quarantine
+        max-retention-days: 30
+      
+      # Configurações de scan de malware
+      scan:
+        enabled: true
+        timeout: 30000  # 30 segundos
+        max-file-size: 5242880  # 5MB
+        retry-attempts: 3
+      
+      # Extensões permitidas
+      allowed-extensions: csv,xlsx,xls
+      
+      # Extensões bloqueadas por segurança
+      blocked-extensions: exe,bat,cmd,com,pif,scr,vbs,js,jar,war,ear,sh,ps1,php,asp,aspx,jsp
+      
+      # Configurações de validação de conteúdo
+      content-validation:
+        enabled: true
+        max-line-length: 10000
+        suspicious-patterns:
+          - javascript:
+          - vbscript:
+          - data:text/html
+          - <script
+          - eval(
+          - setTimeout(
+          - document.cookie
+      
+      # Configurações de logging
+      logging:
+        enabled: true
+        level: INFO
+        log-quarantined: true
+        log-security-issues: true
+      
+      # Configurações de notificação
+      notification:
+        enabled: true
+        notify-admin-on-quarantine: true
+        notify-user-on-rejection: true

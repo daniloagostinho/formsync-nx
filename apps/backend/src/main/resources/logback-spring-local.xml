@@ -1,0 +1,69 @@
+<configuration>
+    <!-- Console appender para logs mínimos -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender para logs do Stripe -->
+    <appender name="STRIPE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/stripe-debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/stripe-debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger - apenas WARN no console -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Logger específico para Stripe - INFO no arquivo -->
+    <logger name="br.com.backend.configuration.StripeConfig" level="INFO" additivity="false">
+        <appender-ref ref="STRIPE_FILE" />
+    </logger>
+
+    <!-- Logger para checkout - INFO no arquivo -->
+    <logger name="br.com.backend.controller.CheckoutController" level="INFO" additivity="false">
+        <appender-ref ref="STRIPE_FILE" />
+    </logger>
+
+    <!-- Logger para backend em geral - INFO no arquivo -->
+    <logger name="br.com.backend" level="INFO" additivity="false">
+        <appender-ref ref="STRIPE_FILE" />
+    </logger>
+
+    <!-- Outros loggers em WARN -->
+    <logger name="org.springframework" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.hibernate" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.postgresql" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="com.zaxxer.hikari" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.apache.catalina" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="ch.qos.logback" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.apache.maven" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.springframework.boot" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.springframework.security" level="WARN" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+</configuration>

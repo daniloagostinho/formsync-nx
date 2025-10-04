@@ -1,0 +1,71 @@
+{
+  "name": "terraform",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/terraform",
+  "targets": {
+    "init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform init",
+        "cwd": "apps/terraform"
+      }
+    },
+    "plan": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform plan -var='aws_account_id=$AWS_ACCOUNT_ID' -var='db_password=$DB_PASSWORD'",
+        "cwd": "apps/terraform"
+      }
+    },
+    "apply": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform apply -auto-approve -var='aws_account_id=$AWS_ACCOUNT_ID' -var='db_password=$DB_PASSWORD'",
+        "cwd": "apps/terraform"
+      }
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform destroy -auto-approve -var='aws_account_id=$AWS_ACCOUNT_ID' -var='db_password=$DB_PASSWORD'",
+        "cwd": "apps/terraform"
+      }
+    },
+    "output": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform output -json",
+        "cwd": "apps/terraform"
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform validate",
+        "cwd": "apps/terraform"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform fmt -recursive",
+        "cwd": "apps/terraform"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run terraform:init",
+          "nx run terraform:validate",
+          "nx run terraform:plan",
+          "nx run terraform:apply"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["infrastructure", "terraform", "aws"]
+}
+

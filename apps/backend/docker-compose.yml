@@ -1,0 +1,131 @@
+version: '3.8'
+
+services:
+  # Redpanda (Kafka compatível) para desenvolvimento local
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: redpanda
+    command:
+      - redpanda start --overprovisioned --smp 1 --memory 512M --reserve-memory 0M --node-id 0 --check=false --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092 --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+    ports:
+      - "9092:9092"   # Kafka API (internal network)
+      - "19092:19092" # Kafka API (external for host)
+      - "9644:9644"   # Admin API
+    environment:
+      - REDPANDA_ENABLE_SCHEMA_REGISTRY=false
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "rpk cluster info -X brokers=redpanda:9092 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: backend-postgres
+    environment:
+      POSTGRES_DB: backend
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d backend"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplicação Spring Boot
+  api:
+    build: .
+    container_name: backend-api
+    ports:
+      - "8080:8080"
+    environment:
+      # Configurações do banco
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      
+      # Configurações JPA
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      
+      # Configurações da aplicação
+      SPRING_APPLICATION_NAME: api
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB_CORS: DEBUG
+      # Kafka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      SPRING_KAFKA_CONSUMER_GROUP_ID: backend-group
+      
+      # Stripe (você pode alterar para suas chaves de produção)
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      
+      # Email (você pode alterar para suas credenciais)
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      
+      # Configurações de memória JVM
+      JAVA_OPTS: -Xmx512m -Xms256m
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redpanda:
+        condition: service_started
+    networks:
+      - backend-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # pgAdmin (opcional - para gerenciar o banco)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: backend-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@backend.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+  # Kafka UI (Provectus) - UI para ver tópicos e mensagens
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=redpanda:9092
+    ports:
+      - "8081:8080"
+    depends_on:
+      - redpanda
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+
+networks:
+  backend-network:
+    driver: bridge 

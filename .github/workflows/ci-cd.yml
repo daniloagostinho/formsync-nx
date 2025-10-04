@@ -1,0 +1,229 @@
+name: 🚀 FormSync CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  NODE_VERSION: '20'
+  JAVA_VERSION: '21'
+
+jobs:
+  # Job 1: Build and Test Affected Projects
+  build-and-test:
+    name: 🔨 Build & Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Needed for nx affected
+        
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔧 Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        
+    - name: 🏗️ Build affected projects
+      run: nx affected --target=build --parallel=3
+      
+    - name: 🧪 Test affected projects
+      run: nx affected --target=test --parallel=3
+      
+    - name: 🔍 Lint affected projects
+      run: nx affected --target=lint --parallel=3
+
+  # Job 2: Deploy Infrastructure (Terraform)
+  deploy-infrastructure:
+    name: 🏗️ Deploy Infrastructure
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔧 Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: '1.6.0'
+        
+    - name: 🔐 Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        
+    - name: 🏗️ Deploy Infrastructure
+      run: nx run terraform:deploy
+      env:
+        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+  # Job 3: Deploy Frontend
+  deploy-frontend:
+    name: 🌐 Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: [deploy-infrastructure]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔨 Build Frontend
+      run: nx build front --configuration=production
+      
+    - name: 🔐 Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        
+    - name: 📤 Deploy to S3
+      run: |
+        S3_BUCKET=$(aws ssm get-parameter --name "/formsync/s3-bucket-name" --query 'Parameter.Value' --output text)
+        aws s3 sync dist/apps/front s3://$S3_BUCKET/ \
+          --delete \
+          --cache-control "public, max-age=31536000" \
+          --exclude "*.html" \
+          --exclude "*.json"
+          
+    - name: 📄 Upload HTML and JSON
+      run: |
+        S3_BUCKET=$(aws ssm get-parameter --name "/formsync/s3-bucket-name" --query 'Parameter.Value' --output text)
+        aws s3 sync dist/apps/front s3://$S3_BUCKET/ \
+          --cache-control "no-cache" \
+          --include "*.html" \
+          --include "*.json"
+          
+    - name: 🔄 Invalidate CloudFront
+      run: |
+        CLOUDFRONT_ID=$(aws ssm get-parameter --name "/formsync/cloudfront-distribution-id" --query 'Parameter.Value' --output text)
+        aws cloudfront create-invalidation \
+          --distribution-id $CLOUDFRONT_ID \
+          --paths "/*"
+
+  # Job 4: Deploy Backend
+  deploy-backend:
+    name: 🚀 Deploy Backend
+    runs-on: ubuntu-latest
+    needs: [deploy-infrastructure]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔧 Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        
+    - name: 🔨 Build Backend
+      run: nx build backend
+      
+    - name: 🔐 Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        
+    - name: 🐳 Build and Push Docker Image
+      run: |
+        ECR_REPO=$(aws ssm get-parameter --name "/formsync/ecr-repository-url" --query 'Parameter.Value' --output text)
+        nx run backend:docker-build
+        docker tag formsync-backend:latest $ECR_REPO:latest
+        docker push $ECR_REPO:latest
+        
+    - name: 🔄 Update ECS Service
+      run: |
+        CLUSTER_NAME=$(aws ssm get-parameter --name "/formsync/ecs-cluster-name" --query 'Parameter.Value' --output text)
+        SERVICE_NAME=$(aws ssm get-parameter --name "/formsync/ecs-service-name" --query 'Parameter.Value' --output text)
+        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+
+  # Job 5: Build Extensions
+  build-extensions:
+    name: 🔌 Build Extensions
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔨 Build Extensions
+      run: |
+        nx build chrome-extension
+        nx build firefox-extension
+        
+    - name: 📦 Package Extensions
+      run: |
+        nx run chrome-extension:package
+        nx run firefox-extension:package
+        
+    - name: 📤 Upload Extensions
+      uses: actions/upload-artifact@v4
+      with:
+        name: browser-extensions
+        path: |
+          dist/apps/chrome-extension/formsync-chrome-extension.zip
+          dist/apps/firefox-extension/formsync-firefox-extension.zip
+

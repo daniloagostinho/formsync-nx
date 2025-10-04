@@ -1,0 +1,430 @@
+.plan-calculator {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  min-height: 400px;
+  height: 81%;
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  flex: 1;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Layout em grid para distribuir inputs e instrução */
+.calculator-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  flex: 1;
+}
+
+/* Coluna esquerda - Formulário */
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Coluna direita - Instrução ou Resultado */
+.calculator-instruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 300px;
+  max-width: 100%;
+}
+
+/* Conteúdo da instrução */
+.instruction-content {
+  text-align: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  max-width: 100%;
+}
+
+.instruction-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.instruction-content h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.instruction-content p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Responsividade para o grid */
+@media (max-width: 768px) {
+  .calculator-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .calculator-instruction {
+    min-height: auto;
+    max-width: 100%;
+  }
+
+  .instruction-content {
+    padding: 20px;
+    max-width: 100%;
+  }
+}
+
+/* Garantir que a calculadora ocupe toda a largura disponível */
+.plan-calculator,
+.plan-calculator * {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Forçar largura total em todos os breakpoints */
+@media (max-width: 640px) {
+  .plan-calculator {
+    padding: 20px;
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .plan-calculator {
+    padding: 24px;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 100% !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .plan-calculator {
+    padding: 24px;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 100% !important;
+  }
+}
+
+.calculator-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.calculator-icon {
+  font-size: 32px;
+  color: #6366f1;
+  margin-bottom: 12px;
+}
+
+.calculator-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.calculator-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.question {
+  margin-bottom: 24px;
+}
+
+.question label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  color: #374151;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  background-color: #fefefe;
+}
+
+.form-select:hover {
+  border-color: #9ca3af;
+  background-color: #fafafa;
+}
+
+/* Resultado da Calculadora */
+.calculator-result {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.result-icon {
+  color: #f59e0b;
+  margin-right: 12px;
+  font-size: 28px;
+}
+
+.result-header h4 {
+  margin: 0;
+  font-size: 24px;
+  color: #1f2937;
+}
+
+/* Card de recomendação - Estilo baseado na página upgrade */
+.calculator-result {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.question label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.limit-item mat-icon {
+  margin-right: 8px;
+  color: #10b981;
+}
+
+.plan-card-blue .limit-item mat-icon {
+  color: #3b82f6;
+}
+
+.plan-card-orange .limit-item mat-icon {
+  color: #f59e0b;
+}
+
+.plan-card-purple .limit-item mat-icon {
+  color: #8b5cf6;
+}
+
+.plan-features {
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.plan-features h5 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.plan-features ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-features li {
+  padding: 4px 0;
+  color: #374151;
+  font-size: 14px;
+}
+
+.plan-example {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.plan-example strong {
+  color: #1f2937;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.plan-example p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.choose-plan-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #10b981 !important;
+  text-transform: none;
+}
+
+.plan-card-blue .choose-plan-btn {
+  background: #3b82f6 !important;
+}
+
+.plan-card-orange .choose-plan-btn {
+  background: #f59e0b !important;
+}
+
+.plan-card-purple .choose-plan-btn {
+  background: #8b5cf6 !important;
+}
+
+/* Comparação rápida */
+.quick-comparison {
+  margin-top: 32px;
+  padding: 24px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.quick-comparison h5 {
+  margin: 0 0 16px 0;
+  color: #1f2937;
+}
+
+.comparison-table {
+  margin-bottom: 16px;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 16px;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  align-items: center;
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.plan-name {
+  font-weight: 600;
+  color: #374151;
+  position: relative;
+}
+
+.plan-name.recommended {
+  color: #10b981;
+}
+
+.recommended-badge {
+  font-size: 12px;
+  margin-left: 8px;
+  color: #10b981;
+}
+
+.plan-specs {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.plan-price-small {
+  font-weight: 600;
+  color: #374151;
+  text-align: right;
+}
+
+.show-comparison-btn,
+.hide-comparison-btn {
+  color: #6b7280;
+  text-transform: none;
+}
+
+/* Estado placeholder */
+.calculator-placeholder {
+  text-align: center;
+  padding: 48px 24px;
+  color: #9ca3af;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -80px;
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.calculator-placeholder p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .plan-calculator {
+    padding: 16px;
+  }
+
+  .plan-limits {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .comparison-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .plan-price-small {
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .calculator-content {
+    gap: 20px;
+  }
+
+  .instruction-content {
+    padding: 16px;
+  }
+}

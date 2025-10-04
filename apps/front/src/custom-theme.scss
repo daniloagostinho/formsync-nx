@@ -1,0 +1,95 @@
+// Tema básico para Angular Material
+// Usando variáveis CSS padrão para evitar problemas de importação
+
+:root {
+  // Cores primárias
+  --primary-color: #3f51b5;
+  --primary-light: #757de8;
+  --primary-dark: #002984;
+
+  // Cores de superfície
+  --surface-color: #ffffff;
+  --surface-variant: #f5f5f5;
+
+  // Cores de texto
+  --on-surface: #212121;
+  --on-surface-variant: #757575;
+
+  // Cores de erro
+  --error-color: #d32f2f;
+  --error-light: #ff6659;
+  --error-dark: #9a0007;
+
+  // Cores de sucesso
+  --success-color: #388e3c;
+  --success-light: #6abf69;
+  --success-dark: #00600f;
+
+  // Cores de warning
+  --warning-color: #f57c00;
+  --warning-light: #ffad42;
+  --warning-dark: #bb4d00;
+
+  // Cores de info
+  --info-color: #1976d2;
+  --info-light: #63a4ff;
+  --info-dark: #004ba0;
+}
+
+html {
+  // Configurações básicas de tipografia
+  font-feature-settings: 'liga' 1, 'calt' 1, 'kern' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Cores padrão
+  color-scheme: light;
+  background-color: var(--surface-color);
+  color: var(--on-surface);
+}
+
+// Estilos para componentes Angular Material
+.mat-mdc-button {
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mat-mdc-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}
+
+.mat-mdc-input-element {
+  font-size: 16px;
+}
+
+// Estilos para indicadores de força de senha
+.password-strength-weak {
+  color: var(--error-color);
+}
+
+.password-strength-medium {
+  color: var(--warning-color);
+}
+
+.password-strength-strong {
+  color: var(--success-color);
+}
+
+// Estilos para requisitos de senha
+.requisito-valido {
+  color: var(--success-color);
+}
+
+.requisito-pendente {
+  color: var(--on-surface-variant);
+}

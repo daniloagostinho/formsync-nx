@@ -1,0 +1,211 @@
+<!-- Layout principal com sidebar -->
+<div class="notificacoes-layout">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Conteúdo principal -->
+  <div class="notificacoes-container">
+    <!-- Skeleton Loading -->
+    <ng-container *ngIf="carregandoPagina; else notificacoesContent">
+      <app-loading-skeleton 
+        titulo="Carregando Notificações"
+        mensagem="Aguarde enquanto buscamos suas notificações...">
+      </app-loading-skeleton>
+    </ng-container>
+
+    <ng-template #notificacoesContent>
+      <!-- Header das Notificações -->
+      <section class="notificacoes-header">
+        <div class="header-content">
+          <div class="header-text">
+            <h1 class="notificacoes-title">
+              <mat-icon>notifications</mat-icon>
+              Notificações de Vencimento
+            </h1>
+            <p class="notificacoes-subtitle">
+              Acompanhe suas notificações sobre formulários próximos do vencimento
+            </p>
+          </div>
+          <div class="header-actions">
+            <button 
+              mat-raised-button
+              color="primary"
+              (click)="carregarNotificacoes()" 
+              class="refresh-button"
+              matTooltip="Atualizar notificações">
+              <mat-icon>refresh</mat-icon>
+              Atualizar
+            </button>
+            <a 
+              routerLink="/configurar-notificacoes"
+              mat-raised-button
+              color="accent"
+              class="config-button"
+              matTooltip="Configurar notificações">
+              <mat-icon>settings</mat-icon>
+              Configurar
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resumo das Notificações -->
+      <section class="notificacoes-section" *ngIf="notificacoes.length > 0">
+        <mat-card class="resumo-card">
+          <mat-card-content>
+            <div class="resumo-grid">
+              <div class="resumo-item">
+                <div class="resumo-icon">
+                  <mat-icon>notifications</mat-icon>
+                </div>
+                <div class="resumo-content">
+                  <h3>{{ notificacoes.length }}</h3>
+                  <p>Total de Notificações</p>
+                </div>
+              </div>
+
+              <div class="resumo-item">
+                <div class="resumo-icon">
+                  <mat-icon>mark_email_unread</mat-icon>
+                </div>
+                <div class="resumo-content">
+                  <h3>{{ getNotificacoesNaoLidas() }}</h3>
+                  <p>Não Lidas</p>
+                </div>
+              </div>
+
+              <div class="resumo-item">
+                <div class="resumo-icon">
+                  <mat-icon>email</mat-icon>
+                </div>
+                <div class="resumo-content">
+                  <h3>{{ getNotificacoesPorTipo('email').length }}</h3>
+                  <p>Por Email</p>
+                </div>
+              </div>
+
+              <div class="resumo-item">
+                <div class="resumo-icon">
+                  <mat-icon>notifications</mat-icon>
+                </div>
+                <div class="resumo-content">
+                  <h3>{{ getNotificacoesPorTipo('push').length }}</h3>
+                  <p>Push</p>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <!-- Lista de Notificações -->
+      <section class="notificacoes-section">
+        <mat-card class="lista-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>list</mat-icon>
+              Lista de Notificações
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ notificacoes.length }} notificação{{ notificacoes.length !== 1 ? 'es' : '' }} encontrada{{ notificacoes.length !== 1 ? 's' : '' }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <div class="notificacoes-lista" *ngIf="notificacoes.length > 0; else semNotificacoes">
+              <div 
+                *ngFor="let notificacao of notificacoes" 
+                class="notificacao-item"
+                [class.nao-lida]="!notificacao.lida">
+                
+                <div class="notificacao-header">
+                  <div class="notificacao-tipo">
+                    <mat-icon 
+                      [color]="getTipoCor(notificacao.tipo)"
+                      class="tipo-icon">
+                      {{ getTipoIcone(notificacao.tipo) }}
+                    </mat-icon>
+                    <span class="tipo-texto">{{ notificacao.tipo.toUpperCase() }}</span>
+                  </div>
+                  
+                  <div class="notificacao-acoes">
+                    <mat-chip 
+                      [color]="getUrgenciaCor(getDiasAteVencimento(notificacao.dataVencimento))"
+                      class="urgencia-chip">
+                      {{ getUrgenciaTexto(getDiasAteVencimento(notificacao.dataVencimento)) }}
+                    </mat-chip>
+                    
+                    <mat-chip 
+                      [color]="getStatusCor(notificacao.status)"
+                      class="status-chip">
+                      <mat-icon class="chip-icon">{{ getStatusIcone(notificacao.status) }}</mat-icon>
+                      {{ notificacao.status }}
+                    </mat-chip>
+                  </div>
+                </div>
+
+                <div class="notificacao-content">
+                  <h4 class="notificacao-titulo">{{ notificacao.titulo }}</h4>
+                  <p class="notificacao-mensagem">{{ notificacao.mensagem }}</p>
+                  
+                  <div class="notificacao-detalhes">
+                    <div class="detalhe-item">
+                      <mat-icon>event</mat-icon>
+                      <span>Vencimento: {{ notificacao.dataVencimento | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    
+                    <div class="detalhe-item">
+                      <mat-icon>schedule</mat-icon>
+                      <span>Enviada: {{ notificacao.dataEnvio | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                    
+                    <div class="detalhe-item">
+                      <mat-icon>timer</mat-icon>
+                      <span>{{ getDiasAteVencimento(notificacao.dataVencimento) }} dias para vencimento</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="notificacao-footer">
+                  <button 
+                    *ngIf="!notificacao.lida"
+                    mat-button
+                    color="primary"
+                    (click)="marcarComoLida(notificacao)"
+                    class="marcar-lida-btn">
+                    <mat-icon>done</mat-icon>
+                    Marcar como lida
+                  </button>
+                  
+                  <span *ngIf="notificacao.lida" class="lida-indicator">
+                    <mat-icon>done_all</mat-icon>
+                    Lida
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #semNotificacoes>
+              <div class="sem-notificacoes">
+                <mat-icon class="empty-icon">notifications_off</mat-icon>
+                <h3>Nenhuma notificação encontrada</h3>
+                <p>Você não possui notificações de vencimento no momento.</p>
+                <a 
+                  routerLink="/configurar-notificacoes"
+                  mat-raised-button
+                  color="primary"
+                  class="config-link">
+                  <mat-icon>settings</mat-icon>
+                  Configurar Notificações
+                </a>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer> 

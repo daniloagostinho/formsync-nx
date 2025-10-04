@@ -1,0 +1,163 @@
+/* Estilo clean para os cartões de analytics - Padrão Dashboard */
+
+/* Cartões principais */
+.analytics-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  /* Borda cinza leve */
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.analytics-card:hover {
+  border-color: #d1d5db;
+  /* Borda um pouco mais escura no hover */
+  transform: translateY(-2px);
+}
+
+/* Cartões de estatísticas */
+.stats-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.2s ease;
+  height: 100%;
+  width: 100%;
+  margin: 8px;
+}
+
+.stats-card:hover {
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+/* Loading State - Padrão Dashboard */
+.loading-spinner {
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Badges de status */
+.status-badge {
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.status-badge:hover {
+  border-color: #d1d5db;
+}
+
+/* Botões */
+.clean-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.clean-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.clean-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+
+/* Estilização personalizada do dropdown de período */
+.period-dropdown-container {
+  position: relative;
+}
+
+.period-dropdown-container button {
+  transition: all 0.2s ease;
+}
+
+.period-dropdown-container button:hover {
+  border-color: #9ca3af;
+}
+
+.period-dropdown-container button:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Garantir que o dropdown fique acima de tudo */
+.period-dropdown-container {
+  position: relative;
+  z-index: 999999;
+}
+
+.period-dropdown-container .dropdown-options {
+  z-index: 999999 !important;
+  position: absolute !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .analytics-card {
+    padding: 16px;
+  }
+
+  .stats-card {
+    padding: 16px;
+    margin: 4px;
+    position: relative;
+  }
+}
+
+/* Grid responsivo */
+.responsive-grid {
+  transition: all 0.3s ease;
+}
+
+/* Melhorias para mobile */
+@media (max-width: 640px) {
+  .analytics-card {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stats-card {
+    padding: 12px;
+    margin: 2px;
+  }
+}
+
+/* Melhorias para tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .analytics-card {
+    padding: 20px;
+  }
+
+  .stats-card {
+    padding: 20px;
+    margin: 6px;
+  }
+}

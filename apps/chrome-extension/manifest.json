@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "FormSync - Formulário Builder",
+  "version": "2.0.3",
+  "description": "Crie templates personalizados e preencha formulários automaticamente em qualquer site com 100% de precisão",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://formsync-backend-simple-prod-1466511997.us-east-1.elb.amazonaws.com/*",
+    "https://d2e8aebnrgifge.cloudfront.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FormSync - Templates",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "decryption-service.js",
+        "content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "test-form.html",
+        "test-decryption.html",
+        "test-real-data.html",
+        "quick-test.html",
+        "test-database-value.html",
+        "test-decryption.js",
+        "test-real-data.js",
+        "quick-test.js",
+        "test-database-value.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

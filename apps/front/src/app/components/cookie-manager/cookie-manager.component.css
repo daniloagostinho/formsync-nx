@@ -1,0 +1,352 @@
+/* Estilo clean para o gerenciador de cookies - seguindo a identidade visual do dashboard */
+
+/* Container principal */
+.cookie-manager-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cartão principal - usando a mesma classe do dashboard */
+.dashboard-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  /* Borda cinza leve igual ao dashboard */
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dashboard-card:hover {
+  border-color: #d1d5db;
+  /* Borda um pouco mais escura no hover */
+  transform: translateY(-2px);
+}
+
+/* Header do gerenciador */
+.cookie-manager-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.cookie-manager-icon {
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cookie-manager-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.cookie-manager-title h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cookie-manager-title p {
+  margin: 0.5rem 0 0 0;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Conteúdo principal */
+.cookie-manager-content {
+  padding: 0;
+}
+
+.cookie-description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* Opções de cookies */
+.cookie-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.cookie-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.cookie-option:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.cookie-option-info h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cookie-option-info p {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.cookie-detail {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Ações dos cookies */
+.cookie-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.accept-all-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.accept-all-btn:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
+.save-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.reject-btn {
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.reject-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+}
+
+/* Informações dos cookies */
+.cookie-info {
+  margin-top: 2rem;
+}
+
+/* Expansion Panel customizado */
+.expansion-panel {
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.expansion-panel:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.panel-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f8fafc;
+  border-radius: 12px 12px 0 0;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.panel-title mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+.panel-content {
+  padding: 1.5rem;
+}
+
+.panel-content h4 {
+  color: #111827;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
+  font-size: 1.1rem;
+}
+
+.panel-content h4:first-child {
+  margin-top: 0;
+}
+
+.panel-content p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.info-list {
+  margin: 0.75rem 0 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.info-list li {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.panel-content a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.panel-content a:hover {
+  text-decoration: underline;
+}
+
+/* Cores de texto */
+.text-primary {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.text-primary:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cookie-manager-container {
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+
+  .cookie-manager-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .cookie-manager-title h2 {
+    font-size: 1.75rem;
+  }
+
+  .cookie-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .cookie-actions {
+    flex-direction: column;
+  }
+
+  .accept-all-btn,
+  .save-btn,
+  .reject-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookie-manager-container {
+    padding: 12px;
+  }
+
+  .dashboard-card {
+    padding: 20px 16px;
+  }
+
+  .cookie-manager-header {
+    padding: 1rem;
+  }
+
+  .cookie-manager-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .cookie-option {
+    padding: 1rem;
+  }
+
+  .cookie-description {
+    font-size: 0.9rem;
+  }
+
+  .panel-header,
+  .panel-content {
+    padding: 0.75rem 1rem;
+  }
+}

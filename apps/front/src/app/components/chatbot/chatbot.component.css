@@ -1,0 +1,25 @@
+/* Estilos customizados para o componente de contato WhatsApp */
+
+/* Animações suaves */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aplicar animação à interface de contato */
+.fixed.bottom-24 {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Transições suaves para todos os elementos interativos */
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}

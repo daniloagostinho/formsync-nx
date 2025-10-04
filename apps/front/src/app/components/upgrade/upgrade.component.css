@@ -1,0 +1,495 @@
+/* Estilo clean para os cartões do upgrade - padronizado com dashboard e templates */
+
+/* Cartões principais seguindo padrão do dashboard */
+.dashboard-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.dashboard-card:hover {
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+/* Loading spinner padrão do sistema */
+.loading-spinner {
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animações suaves padrão */
+.smooth-transition {
+  transition: all 0.2s ease;
+}
+
+/* Estados especiais padrão */
+.card.active {
+  border-color: #7c3aed;
+  background: #faf5ff;
+}
+
+.card.success {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+
+.card.warning {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.card.error {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Estilos específicos para cards de planos que não podem ser totalmente substituídos por Tailwind */
+
+/* Cards de planos simplificados - seguindo padrão do dashboard */
+.plano-card-simples {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.plano-card-simples:hover {
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.plano-card-simples.popular {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+
+.plano-card-simples.plano-gratuito {
+  border-color: #6b7280;
+}
+
+.plano-card-simples.plano-profissional {
+  border-color: #3b82f6;
+}
+
+.plano-card-simples.plano-empresarial {
+  border-color: #8b5cf6;
+}
+
+.plano-card-simples.plano-vitalicio {
+  border-color: #f97316;
+}
+
+.badge-popular {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Botões específicos dos planos */
+.btn-plano-atual {
+  width: 100%;
+  padding: 14px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-plano-downgrade {
+  width: 100%;
+  padding: 14px;
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-upgrade-profissional {
+  width: 100%;
+  padding: 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-upgrade-profissional:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-upgrade-empresarial {
+  width: 100%;
+  padding: 16px;
+  background: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-upgrade-empresarial:hover:not(:disabled) {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.btn-upgrade-vitalicio {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-upgrade-vitalicio:hover:not(:disabled) {
+  background: #ea580c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(249, 115, 22, 0.3);
+}
+
+/* Headers e preços específicos dos planos */
+.plano-header {
+  margin-bottom: 24px;
+}
+
+.plano-header h3 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.preco-grande {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.plano-profissional .preco-grande {
+  color: #3b82f6;
+}
+
+.plano-empresarial .preco-grande {
+  color: #8b5cf6;
+}
+
+.plano-vitalicio .preco-grande {
+  color: #f97316;
+}
+
+/* Limites visuais dos planos */
+.limites-visuais {
+  display: flex;
+  justify-content: space-around;
+  margin: 24px 0;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.limite-item-visual {
+  text-align: center;
+}
+
+.numero-destaque {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.plano-profissional .numero-destaque {
+  color: #3b82f6;
+}
+
+.plano-empresarial .numero-destaque {
+  color: #8b5cf6;
+}
+
+.plano-vitalicio .numero-destaque {
+  color: #f97316;
+}
+
+.descricao-limite {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* Exemplo de uso dos planos */
+.exemplo-uso {
+  background: #f0f9ff;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 20px 0;
+  text-align: left;
+  border: 1px solid #e0f2fe;
+}
+
+.plano-profissional .exemplo-uso {
+  background: #eff6ff;
+  border-color: #dbeafe;
+}
+
+.plano-empresarial .exemplo-uso {
+  background: #f5f3ff;
+  border-color: #e9e5ff;
+}
+
+.plano-vitalicio .exemplo-uso {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.exemplo-uso strong {
+  color: #1f2937;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.exemplo-uso p {
+  margin: 0;
+  color: #374151;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Recursos dos planos */
+.recursos-simples {
+  flex-grow: 1;
+  margin: 20px 0;
+}
+
+.recurso-item {
+  padding: 8px 0;
+  color: #374151;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.recurso-item:last-child {
+  border-bottom: none;
+}
+
+/* Garantia Card - Padrões de Design Consistentes */
+.guarantee-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.guarantee-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.guarantee-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  border-radius: 16px 16px 0 0;
+}
+
+.guarantee-header {
+  display: flex;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.guarantee-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.guarantee-icon {
+  color: white;
+  font-size: 28px;
+}
+
+.guarantee-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.guarantee-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.guarantee-message {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  color: #333;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.guarantee-highlight {
+  color: #4CAF50;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.guarantee-refund {
+  color: #f44336;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #f44336;
+  text-underline-offset: 2px;
+}
+
+.guarantee-details {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Layout responsivo para planos + calculadora */
+@media (max-width: 1024px) {
+
+  /* Em telas menores que lg, empilhar verticalmente */
+  .grid.lg\\:grid-cols-5 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lg\\:col-span-2,
+  .lg\\:col-span-3 {
+    grid-column: span 1 !important;
+  }
+}
+
+/* Responsividade para garantia */
+@media (max-width: 768px) {
+  .guarantee-header {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .guarantee-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .guarantee-icon {
+    font-size: 24px;
+  }
+
+  .guarantee-title {
+    font-size: 1.25rem;
+  }
+
+  .guarantee-message {
+    font-size: 1rem;
+  }
+
+  .guarantee-details {
+    font-size: 0.875rem;
+  }
+}

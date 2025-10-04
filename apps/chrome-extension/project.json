@@ -1,0 +1,35 @@
+{
+  "name": "chrome-extension",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/chrome-extension/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["dist/apps/chrome-extension"],
+      "options": {
+        "command": "mkdir -p dist/apps/chrome-extension && cp -r apps/chrome-extension/* dist/apps/chrome-extension/",
+        "cwd": "."
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd dist/apps/chrome-extension && zip -r formsync-chrome-extension.zip .",
+        "cwd": "."
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run chrome-extension:build",
+          "nx run chrome-extension:package"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["extension", "chrome", "browser"]
+}
+

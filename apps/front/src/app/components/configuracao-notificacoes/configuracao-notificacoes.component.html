@@ -1,0 +1,301 @@
+<!-- Layout principal com sidebar -->
+<div class="notificacoes-layout">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Conteúdo principal -->
+  <div class="notificacoes-container">
+    <!-- Skeleton Loading -->
+    <ng-container *ngIf="carregandoPagina; else notificacoesContent">
+      <app-loading-skeleton 
+        titulo="Carregando Configurações"
+        mensagem="Aguarde enquanto preparamos suas configurações de notificação...">
+      </app-loading-skeleton>
+    </ng-container>
+
+    <ng-template #notificacoesContent>
+      <!-- Header das Notificações -->
+      <section class="notificacoes-header">
+        <div class="header-content">
+          <div class="header-text">
+            <h1 class="notificacoes-title">
+              <mat-icon>notifications</mat-icon>
+              Configurar Notificações de Vencimento
+              <span *ngIf="modoDemo" class="demo-indicator">
+                <mat-icon>play_arrow</mat-icon>
+                MODO DEMO
+              </span>
+            </h1>
+            <p class="notificacoes-subtitle">
+              Configure como e quando receber notificações sobre vencimentos de formulários
+            </p>
+          </div>
+          <div class="header-actions">
+            <button 
+              mat-raised-button
+              color="accent"
+              (click)="ativarModoDemo()" 
+              class="demo-button"
+              matTooltip="Ativar modo demo para testar">
+              <mat-icon>play_arrow</mat-icon>
+              Modo Demo
+            </button>
+            <button 
+              mat-raised-button
+              color="primary"
+              (click)="salvarConfiguracao()" 
+              [disabled]="salvando || !isConfiguracaoValida()"
+              class="save-config-button"
+              matTooltip="Salvar configurações de notificação">
+              <mat-icon>save</mat-icon>
+              {{ salvando ? 'Salvando...' : 'Salvar Configurações' }}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Configurações Principais -->
+      <section class="notificacoes-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <mat-icon>settings</mat-icon>
+            Configurações Gerais
+          </h2>
+          <p class="section-subtitle">Ative ou desative as notificações e configure os parâmetros básicos</p>
+        </div>
+        
+        <mat-card class="config-card">
+          <mat-card-content>
+            <div class="config-grid">
+              <!-- Ativar/Desativar Notificações -->
+              <div class="config-item">
+                <div class="config-label">
+                  <mat-icon>notifications_active</mat-icon>
+                  <span>Ativar Notificações</span>
+                </div>
+                <mat-slide-toggle
+                  [(ngModel)]="configuracao.ativo"
+                  color="primary"
+                  matTooltip="Ativar ou desativar todas as notificações">
+                </mat-slide-toggle>
+              </div>
+
+              <!-- Dias antes do vencimento -->
+              <div class="config-item">
+                <div class="config-label">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Dias antes do vencimento</span>
+                </div>
+                <div class="slider-container">
+                  <mat-slider
+                    [(ngModel)]="configuracao.diasAntesVencimento"
+                    [min]="1"
+                    [max]="30"
+                    [step]="1"
+                    color="primary"
+                    matTooltip="Configure quantos dias antes do vencimento você quer ser notificado">
+                  </mat-slider>
+                  <span class="slider-value">{{ configuracao.diasAntesVencimento }} dias</span>
+                </div>
+              </div>
+
+              <!-- Horário da notificação -->
+              <div class="config-item">
+                <div class="config-label">
+                  <mat-icon>access_time</mat-icon>
+                  <span>Horário da notificação</span>
+                </div>
+                <mat-form-field appearance="outline" class="time-field">
+                  <mat-select [(ngModel)]="configuracao.horarioNotificacao">
+                    <mat-option *ngFor="let horario of horariosDisponiveis" [value]="horario">
+                      {{ horario }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <!-- Tipos de Notificação -->
+      <section class="notificacoes-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <mat-icon>notifications</mat-icon>
+            Tipos de Notificação
+          </h2>
+          <p class="section-subtitle">Escolha como você quer receber as notificações</p>
+        </div>
+        
+        <mat-card class="config-card">
+          <mat-card-content>
+            <div class="notification-types">
+              <!-- Email -->
+              <div class="notification-type-item">
+                <div class="type-info">
+                  <mat-icon class="type-icon">email</mat-icon>
+                  <div class="type-details">
+                    <h4>Notificações por Email</h4>
+                    <p>Receba notificações diretamente no seu email</p>
+                  </div>
+                </div>
+                <div class="type-actions">
+                  <mat-slide-toggle
+                    [(ngModel)]="configuracao.emailAtivo"
+                    color="primary">
+                  </mat-slide-toggle>
+                  <button 
+                    mat-icon-button
+                    color="primary"
+                    (click)="testarNotificacao('email')"
+                    [disabled]="testando || !configuracao.emailAtivo"
+                    matTooltip="Testar notificação por email">
+                    <mat-icon>send</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Push -->
+              <div class="notification-type-item">
+                <div class="type-info">
+                  <mat-icon class="type-icon">notifications</mat-icon>
+                  <div class="type-details">
+                    <h4>Notificações Push</h4>
+                    <p>Receba notificações no navegador (requer permissão)</p>
+                  </div>
+                </div>
+                <div class="type-actions">
+                  <mat-slide-toggle
+                    [(ngModel)]="configuracao.pushAtivo"
+                    color="primary">
+                  </mat-slide-toggle>
+                  <button 
+                    mat-icon-button
+                    color="primary"
+                    (click)="testarNotificacao('push')"
+                    [disabled]="testando || !configuracao.pushAtivo"
+                    matTooltip="Testar notificação push">
+                    <mat-icon>send</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!-- SMS -->
+              <div class="notification-type-item">
+                <div class="type-info">
+                  <mat-icon class="type-icon">sms</mat-icon>
+                  <div class="type-details">
+                    <h4>Notificações por SMS</h4>
+                    <p>Receba notificações por mensagem de texto</p>
+                  </div>
+                </div>
+                <div class="type-actions">
+                  <mat-slide-toggle
+                    [(ngModel)]="configuracao.smsAtivo"
+                    color="primary">
+                  </mat-slide-toggle>
+                  <button 
+                    mat-icon-button
+                    color="primary"
+                    (click)="testarNotificacao('sms')"
+                    [disabled]="testando || !configuracao.smsAtivo"
+                    matTooltip="Testar notificação por SMS">
+                    <mat-icon>send</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <!-- Estatísticas -->
+      <section class="notificacoes-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <mat-icon>analytics</mat-icon>
+            Estatísticas de Notificações
+          </h2>
+          <p class="section-subtitle">Acompanhe o histórico das suas notificações</p>
+        </div>
+        
+        <mat-card class="config-card">
+          <mat-card-content>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <mat-icon>send</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ estatisticas.totalEnviadas }}</h3>
+                  <p>Total Enviadas</p>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <mat-icon>done_all</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ estatisticas.totalLidas }}</h3>
+                  <p>Lidas</p>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <mat-icon>schedule</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ estatisticas.totalPendentes }}</h3>
+                  <p>Pendentes</p>
+                </div>
+              </div>
+
+              <div class="stat-item" *ngIf="estatisticas.ultimaNotificacao">
+                <div class="stat-icon">
+                  <mat-icon>access_time</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ estatisticas.ultimaNotificacao | date:'dd/MM' }}</h3>
+                  <p>Última Notificação</p>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <!-- Status Atual -->
+      <section class="notificacoes-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <mat-icon>info</mat-icon>
+            Status Atual
+          </h2>
+          <p class="section-subtitle">Visualize o resumo das suas configurações atuais</p>
+        </div>
+        
+        <mat-card class="status-card">
+          <mat-card-content>
+            <div class="status-info">
+              <mat-icon class="status-icon">info</mat-icon>
+              <div class="status-text">
+                <h4>Status Atual</h4>
+                <p>
+                  <strong>Configuração:</strong> {{ getStatusText() }}<br>
+                  <strong>Notificação:</strong> {{ configuracao.diasAntesVencimento }} dias antes do vencimento<br>
+                  <strong>Horário:</strong> {{ configuracao.horarioNotificacao }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer> 

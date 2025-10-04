@@ -1,0 +1,35 @@
+{
+  "name": "firefox-extension",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/firefox-extension/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["dist/apps/firefox-extension"],
+      "options": {
+        "command": "mkdir -p dist/apps/firefox-extension && cp -r apps/firefox-extension/* dist/apps/firefox-extension/",
+        "cwd": "."
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd dist/apps/firefox-extension && zip -r formsync-firefox-extension.zip .",
+        "cwd": "."
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run firefox-extension:build",
+          "nx run firefox-extension:package"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["extension", "firefox", "browser"]
+}
+

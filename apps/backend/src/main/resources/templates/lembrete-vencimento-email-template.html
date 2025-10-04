@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lembrete de Vencimento - FormSync</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 40px 20px;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .info-section {
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            margin-bottom: 20px;
+        }
+        
+        .label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .value {
+            font-size: 16px;
+            color: #000000;
+        }
+        
+        .message-section {
+            margin: 40px 0;
+        }
+        
+        .message-content {
+            font-size: 16px;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            font-size: 12px;
+            color: #666666;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="logo">FormSync</div>
+        
+        <h1 class="title">Lembrete de Vencimento</h1>
+        
+        <div class="message-section">
+            <div class="message-content">
+                <p>Olá <span th:text="${nome}">João</span>,</p>
+                
+                <p>Este é um lembrete de que sua assinatura do plano <span th:text="${plano}">Básico</span> vence em breve.</p>
+                
+                <div class="info-section">
+                    <div class="info-item">
+                        <div class="label">Plano</div>
+                        <div class="value" th:text="${plano}">Básico</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="label">Data de Vencimento</div>
+                        <div class="value" th:text="${dataVencimento}">29/09/2024</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="label">Valor da Renovação</div>
+                        <div class="value">R$ <span th:text="${valor}">29,90</span></div>
+                    </div>
+                </div>
+                
+                <p>Para continuar aproveitando todos os recursos do FormSync, certifique-se de que seu método de pagamento está atualizado.</p>
+                
+                <p>Se você não deseja renovar, pode cancelar sua assinatura a qualquer momento através da sua conta.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Best,<br>FormSync</p>
+            <p><a href="#">help center</a></p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

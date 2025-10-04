@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Rápido - FormSync</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Teste Rápido - FormSync</h1>
+        <p>Teste simples da descriptografia com dados reais.</p>
+
+        <div class="test-section info">
+            <h3>📋 Instruções</h3>
+            <p>1. Clique em "Testar Descriptografia"</p>
+            <p>2. Verifique o resultado abaixo</p>
+            <p>3. Abra o Console (F12) para ver logs detalhados</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Teste Automático</h3>
+            <button onclick="runQuickTest()">🚀 Testar Descriptografia</button>
+            
+            <div id="testResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Status</h3>
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <script src="decryption-service.js"></script>
+    <script src="quick-test.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

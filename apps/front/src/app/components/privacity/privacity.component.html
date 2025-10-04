@@ -1,0 +1,472 @@
+<!-- Container principal responsivo -->
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-12">
+      <div class="mb-6">
+        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+            </path>
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-3">Política de Privacidade</h1>
+        <p class="text-lg text-gray-600 mb-2">FormSync - Versão Beta</p>
+        <p class="text-sm text-gray-500">Última atualização: {{ dataAtualizacao | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <div class="legal-content">
+      <!-- Introdução -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          Nossa Compromisso com a Privacidade
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          O <strong class="font-semibold text-gray-900">FormSync</strong> respeita sua privacidade e está em
+          conformidade com
+          a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018). Esta política descreve como coletamos, usamos,
+          armazenamos e protegemos suas informações pessoais durante a versão beta do serviço.
+        </p>
+      </div>
+
+      <!-- Base Legal -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          Base Legal para Tratamento de Dados
+        </h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          O tratamento de seus dados pessoais é realizado com base nas seguintes hipóteses legais previstas na LGPD:
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700"><strong class="font-semibold">Execução de contrato:</strong> Para prestação dos
+              serviços contratados</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700"><strong class="font-semibold">Legítimo interesse:</strong> Para melhorias no
+              serviço e segurança</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700"><strong class="font-semibold">Consentimento:</strong> Quando expressamente
+              autorizado</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Coleta de Dados -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-6">
+          <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4">
+              </path>
+            </svg>
+          </div>
+          Dados que Coletamos
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-green-800 mb-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              Dados de Identificação
+            </h3>
+            <ul class="space-y-2 text-green-700">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                Nome completo
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                Endereço de e-mail
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                Informações de conta e login
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-800 mb-3">
+              <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                  </path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              Dados de Uso (Armazenados Localmente)
+            </h3>
+            <ul class="space-y-2 text-blue-700">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Campos salvos para preenchimento automático
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Configurações da extensão
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Histórico de preenchimentos
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finalidade do Tratamento -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+              </path>
+            </svg>
+          </div>
+          Finalidade do Tratamento
+        </h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          Utilizamos seus dados pessoais para:
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Prestação dos serviços contratados</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Comunicação sobre o serviço e suporte</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Melhorias na plataforma e experiência do usuário</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-gray-700">Cumprimento de obrigações legais</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Armazenamento -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-6">
+          <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4">
+              </path>
+            </svg>
+          </div>
+          Armazenamento e Segurança
+        </h2>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-800 mb-3">
+            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                </path>
+              </svg>
+            </div>
+            Medidas de Segurança
+          </h3>
+          <p class="text-blue-700 leading-relaxed">
+            Implementamos medidas técnicas e organizacionais adequadas para proteger seus dados, incluindo criptografia,
+            controle de acesso e monitoramento de segurança.
+          </p>
+        </div>
+
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-green-800 mb-2">
+            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            Armazenamento Local
+          </h3>
+          <p class="text-green-700 leading-relaxed">
+            <strong>Importante:</strong> Dados de preenchimento são armazenados localmente no seu dispositivo,
+            não sendo enviados para nossos servidores. Isso garante máxima privacidade e controle sobre seus dados.
+          </p>
+        </div>
+      </div>
+
+      <!-- Compartilhamento -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-6">
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z">
+              </path>
+            </svg>
+          </div>
+          Compartilhamento de Dados
+        </h2>
+
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-red-800 mb-3">
+            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"></path>
+              </svg>
+            </div>
+            Não Vendemos Seus Dados
+          </h3>
+          <p class="text-red-700 leading-relaxed">
+            <strong>Compromisso firme:</strong> Não vendemos, alugamos ou compartilhamos seus dados pessoais com
+            terceiros,
+            exceto quando exigido por lei ou com seu consentimento explícito. Seus dados são valiosos e privados.
+          </p>
+        </div>
+      </div>
+
+      <!-- Direitos do Titular -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-6">
+          <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+              </path>
+            </svg>
+          </div>
+          Seus Direitos (LGPD)
+        </h2>
+        <p class="text-gray-700 leading-relaxed mb-6">
+          Conforme a LGPD, você tem os seguintes direitos:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-blue-800 mb-2">Acesso</h4>
+                <p class="text-blue-700 text-sm">Confirmar a existência e acessar seus dados</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-green-800 mb-2">Correção</h4>
+                <p class="text-green-700 text-sm">Corrigir dados incompletos ou desatualizados</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-red-800 mb-2">Exclusão</h4>
+                <p class="text-red-700 text-sm">Solicitar a exclusão de seus dados</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-purple-800 mb-2">Portabilidade</h4>
+                <p class="text-purple-700 text-sm">Receber seus dados em formato estruturado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercício dos Direitos -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+              </path>
+            </svg>
+          </div>
+          Como Exercer Seus Direitos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Para exercer seus direitos, entre em contato conosco através do e-mail:
+          <strong class="font-semibold text-gray-900">privacidade&#64;formsync.com</strong>. Responderemos sua
+          solicitação no prazo máximo de 15 (quinze)
+          dias.
+        </p>
+      </div>
+
+      <!-- Transferência Internacional -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+              </path>
+            </svg>
+          </div>
+          Transferência Internacional
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Seus dados podem ser transferidos para países que ofereçam grau de proteção adequado aos dados pessoais,
+          conforme exigido pela LGPD.
+        </p>
+      </div>
+
+      <!-- Retenção de Dados -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          Retenção de Dados
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Mantemos seus dados pessoais pelo tempo necessário para cumprir as finalidades descritas nesta política,
+          respeitando os prazos legais e regulamentares aplicáveis.
+        </p>
+      </div>
+
+      <!-- Alterações -->
+      <div class="bg-white rounded-xl p-6 border border-gray-200 mb-8">
+        <h2 class="flex items-center gap-3 text-xl font-semibold text-gray-900 mb-4">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </div>
+          Alterações na Política
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Esta política pode ser atualizada periodicamente. Recomendamos que você a revise regularmente. Notificaremos
+          sobre mudanças significativas através do e-mail cadastrado.
+        </p>
+      </div>
+
+      <!-- Contato -->
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 border border-blue-200">
+        <div class="text-center">
+          <h3 class="flex items-center justify-center gap-3 text-2xl font-semibold text-blue-900 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                </path>
+              </svg>
+            </div>
+            Dúvidas sobre Privacidade?
+          </h3>
+          <p class="text-blue-700 leading-relaxed mb-6 max-w-2xl mx-auto">
+            Se você tem dúvidas sobre nossa política de privacidade ou deseja exercer seus direitos, entre em contato
+            conosco.
+          </p>
+          <a routerLink="/contato"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+              </path>
+            </svg>
+            Fale Conosco
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
