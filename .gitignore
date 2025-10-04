@@ -82,6 +82,11 @@ apps/terraform/*.tfplan
 .env.test.local
 .env.production.local
 
+# Application properties with secrets
+**/application-local-force.properties
+**/application-prod.properties
+**/application-secrets.properties
+
 # OS generated files
 .DS_Store
 .DS_Store?
