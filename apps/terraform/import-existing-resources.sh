@@ -20,6 +20,12 @@ if [ ! -d ".terraform" ]; then
     terraform init
 fi
 
+# Definir variáveis necessárias
+export AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID:-$(aws sts get-caller-identity --query Account --output text)}
+export DB_PASSWORD=${DB_PASSWORD:-"defaultpassword123"}
+
+echo "🔧 Usando AWS Account ID: $AWS_ACCOUNT_ID"
+
 # Função para importar recurso
 import_resource() {
     local terraform_resource=$1
@@ -27,7 +33,7 @@ import_resource() {
     local description=$3
     
     echo "📥 Importando $description..."
-    if terraform import "$terraform_resource" "$aws_identifier" 2>/dev/null; then
+    if terraform import -var="aws_account_id=$AWS_ACCOUNT_ID" -var="db_password=$DB_PASSWORD" "$terraform_resource" "$aws_identifier" 2>/dev/null; then
         echo "✅ $description importado com sucesso"
     else
         echo "⚠️  $description já está no state ou não existe"
@@ -70,7 +76,7 @@ import_resource "aws_db_subnet_group.formsync_db" "formsync-db-subnet-group" "DB
 
 echo "✅ Importação concluída!"
 echo "🔍 Verificando estado do Terraform..."
-if terraform plan -detailed-exitcode >/dev/null 2>&1; then
+if terraform plan -var="aws_account_id=$AWS_ACCOUNT_ID" -var="db_password=$DB_PASSWORD" -detailed-exitcode >/dev/null 2>&1; then
     echo "🎉 Perfeito! Não há mais conflitos."
 else
     echo "⚠️  Ainda há algumas diferenças. Execute 'terraform plan' para ver detalhes."
