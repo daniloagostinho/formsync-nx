@@ -53,8 +53,32 @@ import_resource "aws_subnet.public[0]" "subnet-0318f609b6c42ad48" "Public Subnet
 echo "📥 Importando API Gateway Resource..."
 import_resource "aws_api_gateway_resource.api_proxy" "lh2d30" "API Gateway Resource"
 
-# 5. Importar outros recursos que podem estar conflitando
-echo "📥 Importando outros recursos críticos..."
+# 5. Importar TODOS os recursos que podem estar conflitando
+echo "📥 Importando TODOS os recursos críticos..."
+
+# IAM Roles
+import_resource "aws_iam_role.lambda_role" "formsync-lambda-role" "Lambda Role"
+import_resource "aws_iam_role.ecs_execution_role" "formsync-ecs-execution-role" "ECS Execution Role"
+import_resource "aws_iam_role.ecs_task_role" "formsync-ecs-task-role" "ECS Task Role"
+
+# IAM Policies
+import_resource "aws_iam_policy.formsync_apigateway_policy" "arn:aws:iam::${AWS_ACCOUNT_ID}:policy/formsync-apigateway-policy" "API Gateway Policy"
+import_resource "aws_iam_policy.formsync_ssm_policy" "arn:aws:iam::${AWS_ACCOUNT_ID}:policy/formsync-ssm-policy" "SSM Policy"
+import_resource "aws_iam_policy.formsync_iam_policy" "arn:aws:iam::${AWS_ACCOUNT_ID}:policy/formsync-iam-policy" "IAM Policy"
+import_resource "aws_iam_policy.formsync_ecs_policy" "arn:aws:iam::${AWS_ACCOUNT_ID}:policy/formsync-ecs-policy" "ECS Policy"
+
+# ECR Repository
+import_resource "aws_ecr_repository.formsync_backend" "formsync-backend" "ECR Repository"
+
+# CloudWatch Log Group
+import_resource "aws_cloudwatch_log_group.formsync_backend" "/ecs/formsync-backend" "CloudWatch Log Group"
+
+# VPC (se não estiver no state)
+if ! terraform state show aws_vpc.main >/dev/null 2>&1; then
+    import_resource "aws_vpc.main" "vpc-03a57331ce1878d42" "VPC"
+else
+    echo "✅ VPC já está no state"
+fi
 
 # API Gateway Method
 import_resource "aws_api_gateway_method.api_proxy" "agm-6i91b1pzx0-lh2d30-ANY" "API Gateway Method"
