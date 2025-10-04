@@ -56,6 +56,10 @@ Thumbs.db
 .nx/cache
 .nx/workspace-data
 
+# Angular specific caches
+.angular/cache/
+.angular/
+
 # Backend specific
 apps/backend/target/
 apps/backend/logs/
