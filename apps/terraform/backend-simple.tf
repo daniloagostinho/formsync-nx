@@ -118,13 +118,13 @@ resource "aws_api_gateway_method_response" "api_proxy" {
   status_code = "200"
 }
 
-# API Gateway Integration Response
-resource "aws_api_gateway_integration_response" "api_proxy" {
-  rest_api_id = aws_api_gateway_rest_api.formsync_api.id
-  resource_id = aws_api_gateway_resource.api_proxy.id
-  http_method = aws_api_gateway_method.api_proxy.http_method
-  status_code = aws_api_gateway_method_response.api_proxy.status_code
-}
+# API Gateway Integration Response - COMENTADO TEMPORARIAMENTE PARA EVITAR CONFLITOS
+# resource "aws_api_gateway_integration_response" "api_proxy" {
+#   rest_api_id = aws_api_gateway_rest_api.formsync_api.id
+#   resource_id = aws_api_gateway_resource.api_proxy.id
+#   http_method = aws_api_gateway_method.api_proxy.http_method
+#   status_code = aws_api_gateway_method_response.api_proxy.status_code
+# }
 
 # API Gateway Deployment
 resource "aws_api_gateway_deployment" "formsync_api" {
@@ -132,8 +132,7 @@ resource "aws_api_gateway_deployment" "formsync_api" {
 
   depends_on = [
     aws_api_gateway_integration.api_proxy,
-    aws_api_gateway_method_response.api_proxy,
-    aws_api_gateway_integration_response.api_proxy
+    aws_api_gateway_method_response.api_proxy
   ]
 
   lifecycle {
