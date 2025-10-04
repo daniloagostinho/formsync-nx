@@ -86,9 +86,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
         
-    - name: 🔄 Import All Existing Resources
+    - name: 🔧 Fix Specific Conflicts
       working-directory: apps/terraform
-      run: ./import-all-existing.sh
+      run: ./fix-specific-conflicts.sh
       env:
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
