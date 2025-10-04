@@ -37,9 +37,13 @@ echo "📋 Resolvendo conflitos específicos..."
 echo "📥 Importando Security Group ECS Backend..."
 import_resource "aws_security_group.ecs_backend" "sg-00afd21afc10e3d87" "ECS Backend Security Group"
 
-# 2. Importar Internet Gateway existente
-echo "📥 Importando Internet Gateway..."
-import_resource "aws_internet_gateway.main" "igw-0e6ca996f9e3a4380" "Internet Gateway"
+# 2. Importar Internet Gateway existente (se não estiver no state)
+echo "📥 Verificando Internet Gateway..."
+if ! terraform state show aws_internet_gateway.main >/dev/null 2>&1; then
+    import_resource "aws_internet_gateway.main" "igw-0e6ca996f9e3a4380" "Internet Gateway"
+else
+    echo "✅ Internet Gateway já está no state"
+fi
 
 # 3. Importar Subnet existente
 echo "📥 Importando Subnet Public 0..."
