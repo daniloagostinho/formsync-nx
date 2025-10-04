@@ -14,18 +14,19 @@ resource "aws_ecr_repository" "formsync_backend" {
   })
 }
 
-# Application Load Balancer para backend - COMENTADO PARA ECONOMIA
-# resource "aws_lb" "formsync_backend" {
-#   name               = "${var.project_name}-backend-alb"
-#   internal           = false
-#   load_balancer_type = "application"
-#   security_groups    = [aws_security_group.alb.id]
-#   subnets            = aws_subnet.public[*].id
-#   enable_deletion_protection = false
-#   tags = merge(local.common_tags, {
-#     Name = "${var.project_name}-backend-alb"
-#   })
-# }
+# Application Load Balancer para backend
+resource "aws_lb" "formsync_backend" {
+  name               = "${var.project_name}-backend-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = aws_subnet.public[*].id
+  enable_deletion_protection = false
+  
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-backend-alb"
+  })
+}
 
 # Target Group para ECS
 resource "aws_lb_target_group" "formsync_backend" {
@@ -52,17 +53,17 @@ resource "aws_lb_target_group" "formsync_backend" {
   })
 }
 
-# ALB Listener - COMENTADO PARA ECONOMIA
-# resource "aws_lb_listener" "formsync_backend" {
-#   load_balancer_arn = aws_lb.formsync_backend.arn
-#   port              = "80"
-#   protocol          = "HTTP"
-# 
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.formsync_backend.arn
-#   }
-# }
+# ALB Listener
+resource "aws_lb_listener" "formsync_backend" {
+  load_balancer_arn = aws_lb.formsync_backend.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.formsync_backend.arn
+  }
+}
 
 # API Gateway para backend (muito mais barato que ALB)
 resource "aws_api_gateway_rest_api" "formsync_api" {

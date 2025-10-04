@@ -86,12 +86,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
         
-    - name: 🔄 Import Existing Resources
+    - name: 🧹 Force Cleanup Existing Resources
       working-directory: apps/terraform
-      run: ./import-existing-resources.sh
+      run: ./force-cleanup-vpcs.sh
       env:
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      continue-on-error: true
         
     - name: 🏗️ Deploy Infrastructure
       run: nx run terraform:deploy

@@ -63,7 +63,7 @@ resource "aws_rds_cluster" "formsync_db" {
 # RDS Cluster Instance (required for Aurora)
 resource "aws_rds_cluster_instance" "formsync_db" {
   cluster_identifier = aws_rds_cluster.formsync_db.id
-  instance_class     = "db.t3.small"  # Menor instância disponível para reduzir custos
+  instance_class     = "db.t3.medium"  # Instância compatível com Aurora PostgreSQL
   engine             = aws_rds_cluster.formsync_db.engine
   engine_version     = aws_rds_cluster.formsync_db.engine_version
 
